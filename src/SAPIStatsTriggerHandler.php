@@ -14,32 +14,37 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 class SAPIStatsTriggerHandler implements SAPIStatsTriggerHandlerInterface {
 
   /**
-   * Drupal\Core\Config\ConfigManager definition.
+   * The configuration manager.
    *
-   * @var Drupal\Core\Config\ConfigManager
+   * @var \Drupal\Core\Config\ConfigManager
    */
-  protected $config_manager;
+  protected $configManager;
 
   /**
-   * Drupal\Core\Session\AccountProxy definition.
+   * The current user.
    *
-   * @var Drupal\Core\Session\AccountProxy
+   * @var \Drupal\Core\Session\AccountProxy
    */
-  protected $current_user;
+  protected $currentUser;
 
   /**
-   * Drupal\Core\Routing\CurrentRouteMatch definition.
+   * The current route match service.
    *
-   * @var Drupal\Core\Routing\CurrentRouteMatch
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
    */
-  protected $current_route_match;
+  protected $currentRouteMatch;
+
   /**
-   * Constructor.
+   * SAPIStatsTriggerHandler constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigManager $configManager
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
+   * @param \Drupal\Core\Routing\CurrentRouteMatch $currentRouteMatch
    */
-  public function __construct(ConfigManager $config_manager, AccountProxy $current_user, CurrentRouteMatch $current_route_match) {
-    $this->config_manager = $config_manager;
-    $this->current_user = $current_user;
-    $this->current_route_match = $current_route_match;
+  public function __construct(ConfigManager $configManager, AccountProxy $currentUser, CurrentRouteMatch $currentRouteMatch) {
+    $this->configManager = $configManager;
+    $this->currentUser = $currentUser;
+    $this->currentRouteMatch = $currentRouteMatch;
   }
 
 }

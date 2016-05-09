@@ -9,5 +9,4 @@ namespace Drupal\sapi;
  */
 interface SAPIStatsTriggerHandlerInterface {
 
-
 }
