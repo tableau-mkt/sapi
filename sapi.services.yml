@@ -1,0 +1,4 @@
+services:
+  sapi.stats_trigger_handler:
+    class: Drupal\sapi\SAPIStatsTriggerHandler
+    arguments: ['@config.manager', '@current_user', '@current_route_match']
