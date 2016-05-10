@@ -1,4 +1,4 @@
-sapi:
+sapi.js-library:
   version: 1.x
   js:
     js/sapi.js: {}
