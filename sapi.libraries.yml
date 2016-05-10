@@ -1,0 +1,7 @@
+sapi:
+  version: 1.x
+  js:
+    js/sapi.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
