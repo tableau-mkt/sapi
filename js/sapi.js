@@ -13,22 +13,31 @@
   Drupal.sapi = {
 
     /**
-     * Records the action on the URL.
+     * Sends the action on the URI.
      *
-     * @param {string} url
      * @param {string} action
+     * @param {string} uri
+     * @param {Object} options
      */
-    record: function(url, action) {
+    send: function(action, uri, options) {
+      options = $.extend({
+        'completeCallback': function(){},
+        'successCallback': function(){},
+        'errorCallback': function(){}
+      }, typeof options === 'object' ? options : {});
+
       $.ajax({
-        url: Drupal.url('sapi/js/store'),
+        url: Drupal.url('sapi/js/send'),
         type: 'POST',
         data: {
-          'url': url,
-          'action': action
+          'action': action,
+          'uri': uri
         },
         dataType: 'json',
-        success: function() {},
-        error: function() {}
+        timeout: 2000,
+        complete: options.completeCallback,
+        success: options.successCallback,
+        error: options.errorCallback
       });
     }
 
