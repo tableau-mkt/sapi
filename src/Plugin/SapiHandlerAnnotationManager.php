@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\sapi\Plugin\SapiHandlerAnnotationBaseManager.
+ * Contains \Drupal\sapi\Plugin\SapiHandlerAnnotationManager.
  */
 
 namespace Drupal\sapi\Plugin;
@@ -12,12 +12,12 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 
 /**
- * Provides the Sapi handler annotation base plugin manager.
+ * Provides the Sapi handler annotation plugin manager.
  */
-class SapiHandlerAnnotationBaseManager extends DefaultPluginManager {
+class SapiHandlerAnnotationManager extends DefaultPluginManager {
 
   /**
-   * Constructor for SapiHandlerAnnotationBaseManager objects.
+   * Constructor for SapiHandlerAnnotationManager objects.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -28,10 +28,10 @@ class SapiHandlerAnnotationBaseManager extends DefaultPluginManager {
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/SapiHandlerAnnotationBase', $namespaces, $module_handler, 'Drupal\sapi\Plugin\SapiHandlerAnnotationBaseInterface', 'Drupal\sapi\Annotation\SapiHandlerAnnotationBase');
+    parent::__construct('Plugin/SapiHandlerAnnotation', $namespaces, $module_handler, 'Drupal\sapi\Plugin\SapiHandlerAnnotationInterface', 'Drupal\sapi\Annotation\SapiHandlerAnnotation');
 
-    $this->alterInfo('sapi_SapiHandlerAnnotationBase_info');
-    $this->setCacheBackend($cache_backend, 'sapi_SapiHandlerAnnotationBase_plugins');
+    $this->alterInfo('sapi_SapiHandlerAnnotation_info');
+    $this->setCacheBackend($cache_backend, 'sapi_SapiHandlerAnnotation_plugins');
   }
 
 }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\sapi\Annotation\SapiHandlerAnnotationBase.
+ * Contains \Drupal\sapi\Annotation\SapiHandlerAnnotation.
  */
 
 namespace Drupal\sapi\Annotation;
@@ -10,14 +10,14 @@ namespace Drupal\sapi\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines a Sapi handler annotation base item annotation object.
+ * Defines a Sapi handler annotation item annotation object.
  *
- * @see \Drupal\sapi\Plugin\SapiHandlerAnnotationBaseManager
+ * @see \Drupal\sapi\Plugin\SapiHandlerAnnotationManager
  * @see plugin_api
  *
  * @Annotation
  */
-class SapiHandlerAnnotationBase extends Plugin {
+class SapiHandlerAnnotation extends Plugin {
 
   /**
    * The plugin ID.
