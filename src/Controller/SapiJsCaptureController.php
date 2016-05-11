@@ -11,17 +11,17 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
- * Class SapiJsActionCaptureController.
+ * Class SapiJsCaptureController.
  *
  * @package Drupal\sapi
  */
-class SapiJsActionCaptureController extends ControllerBase implements ContainerInjectionInterface {
+class SapiJsCaptureController extends ControllerBase implements ContainerInjectionInterface {
 
   /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
   protected $requestStack;
 
   /**
-   * SapiJsActionCaptureController constructor.
+   * SapiJsCaptureController constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    */
