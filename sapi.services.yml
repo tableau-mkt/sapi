@@ -1,0 +1,5 @@
+services:
+  sapi.stats_dispatcher:
+    class: Drupal\sapi\SapiStatsDispatcher
+    arguments: ["@config.manager", "@current_user", "@current_route_match"]
+
