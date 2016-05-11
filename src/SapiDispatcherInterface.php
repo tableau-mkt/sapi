@@ -2,7 +2,7 @@
 
 namespace Drupal\sapi;
 
-use \Drupal\sapi\StatisticsItemInterface;
+use Drupal\sapi\StatisticsItemInterface;
 
 /**
  * Interface SapiDispatcherInterface.
