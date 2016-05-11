@@ -3,7 +3,7 @@
  * JavaScript library for the Statistics API (sapi) module.
  */
 
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal) {
 
   'use strict';
 
@@ -43,4 +43,4 @@
 
   };
 
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal);
