@@ -48,9 +48,9 @@ class SapiStatsDispatcher implements SapiStatsDispatcherInterface {
    /**
     * Receives event data and creates plugin instances.
     * 
-    * @param array $data
+    * @param StatisticsItemInterface $item
    */
-  public function dispatch(array $data){
+  public function dispatch(StatisticsItemInterface $item){
 
   }
 
