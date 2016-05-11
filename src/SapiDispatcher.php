@@ -8,11 +8,11 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use \Drupal\sapi\StatisticsItemInterface;
 
 /**
- * Class SapiStatsDispatcher.
+ * Class SapiDispatcher.
  *
  * @package Drupal\sapi
  */
-class SapiStatsDispatcher implements SapiStatsDispatcherInterface {
+class SapiDispatcher implements SapiDispatcherInterface {
 
   /**
    * Drupal\Core\Config\ConfigManager definition.

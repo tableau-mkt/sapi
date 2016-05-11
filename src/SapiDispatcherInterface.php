@@ -5,11 +5,11 @@ namespace Drupal\sapi;
 use \Drupal\sapi\StatisticsItemInterface;
 
 /**
- * Interface SapiStatsDispatcherInterface.
+ * Interface SapiDispatcherInterface.
  *
  * @package Drupal\sapi
  */
-interface SapiStatsDispatcherInterface {
+interface SapiDispatcherInterface {
 
    /**
     * Creates plugin instances.
