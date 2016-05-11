@@ -9,6 +9,6 @@ use Drupal\sapi\StatisticsItemInterface;
  *
  * @package Drupal\sapi
  */
-interface StatisticsItemInterface{
+interface StatisticsItemInterface {
 
 }

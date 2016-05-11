@@ -48,7 +48,7 @@ class SapiDispatcher implements SapiDispatcherInterface {
   }
 
    /**
-    * Receives event data and creates plugin instances.
+    * Dispatches the statistics item to interested parties.
     * 
     * @param StatisticsItemInterface $item
    */

@@ -12,7 +12,7 @@ use Drupal\sapi\StatisticsItemInterface;
 interface SapiDispatcherInterface {
 
    /**
-    * Creates plugin instances.
+    * Dispatches the statistics item to interested parties.
     * 
     * @param StatisticsItemInterface $item
    */
