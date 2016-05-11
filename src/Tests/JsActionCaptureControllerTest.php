@@ -80,7 +80,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testCaptureWithNonAuthorizedUser() {
     $this->drupalLogin($this->drupalCreateUser());
-    $this->drupalPost('sapi/js/capture', '*/*', array('action' => 'click', 'uri' => 'http://www.example.com'));
+    $this->drupalPost('sapi/js/capture', '', array('action' => 'click', 'uri' => 'http://www.example.com'));
     $this->assertResponse(403);
   }
 
