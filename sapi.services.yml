@@ -1,4 +1,4 @@
 services:
-  plugin.manager.sapihandlerannotation.processor:
-    class: Drupal\sapi\Plugin\SapiHandlerAnnotationManager
+  plugin.manager.statisticsplugin.processor:
+    class: Drupal\sapi\Plugin\StatisticsPluginManager
     parent: default_plugin_manager

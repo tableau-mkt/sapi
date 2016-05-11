@@ -1,23 +1,18 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\sapi\Annotation\SapiHandlerAnnotation.
- */
-
 namespace Drupal\sapi\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines a Sapi handler annotation item annotation object.
+ * Defines a Statistics plugin item annotation object.
  *
- * @see \Drupal\sapi\Plugin\SapiHandlerAnnotationManager
+ * @see \Drupal\sapi\Plugin\StatisticsPluginManager
  * @see plugin_api
  *
  * @Annotation
  */
-class SapiHandlerAnnotation extends Plugin {
+class StatisticsPlugin extends Plugin {
 
   /**
    * The plugin ID.

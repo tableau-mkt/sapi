@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\sapi\Plugin\SapiHandlerAnnotationManager.
- */
-
 namespace Drupal\sapi\Plugin;
 
 use Drupal\Core\Plugin\DefaultPluginManager;
@@ -12,12 +7,12 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 
 /**
- * Provides the Sapi handler annotation plugin manager.
+ * Provides the Statistics plugin plugin manager.
  */
-class SapiHandlerAnnotationManager extends DefaultPluginManager {
+class StatisticsPluginManager extends DefaultPluginManager {
 
   /**
-   * Constructor for SapiHandlerAnnotationManager objects.
+   * Constructor for StatisticsPluginManager objects.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -28,10 +23,10 @@ class SapiHandlerAnnotationManager extends DefaultPluginManager {
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/SapiHandlerAnnotation', $namespaces, $module_handler, 'Drupal\sapi\Plugin\SapiHandlerAnnotationInterface', 'Drupal\sapi\Annotation\SapiHandlerAnnotation');
+    parent::__construct('Plugin/StatisticsPlugin', $namespaces, $module_handler, 'Drupal\sapi\Plugin\StatisticsPluginInterface', 'Drupal\sapi\Annotation\StatisticsPlugin');
 
-    $this->alterInfo('sapi_SapiHandlerAnnotation_info');
-    $this->setCacheBackend($cache_backend, 'sapi_SapiHandlerAnnotation_plugins');
+    $this->alterInfo('sapi_StatisticsPlugin_info');
+    $this->setCacheBackend($cache_backend, 'sapi_StatisticsPlugin_plugins');
   }
 
 }
