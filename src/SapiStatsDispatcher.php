@@ -45,4 +45,13 @@ class SapiStatsDispatcher implements SapiStatsDispatcherInterface {
     $this->current_route_match = $current_route_match;
   }
 
+   /**
+    * Receives event data and creates plugin instances.
+    * 
+    * @param array $data
+   */
+  public function dispatch(array $data){
+
+  }
+
 }
