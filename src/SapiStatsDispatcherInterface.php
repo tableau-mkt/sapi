@@ -16,5 +16,4 @@ interface SapiStatsDispatcherInterface {
    */
   public function dispatch(StatisticsItemInterface $item);
 
-
 }
