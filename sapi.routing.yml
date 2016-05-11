@@ -1,0 +1,8 @@
+sapi.sapi_js_capture:
+  path: 'sapi/js/capture'
+  defaults:
+    _controller: '\Drupal\sapi\Controller\SapiJsActionCaptureController::capture'
+    _title: 'JS action capture controller'
+  requirements:
+    _permission: 'sapi capture js actions'
+  methods: ['POST']

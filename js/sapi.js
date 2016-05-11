@@ -27,7 +27,7 @@
       }, typeof options === 'object' ? options : {});
 
       $.ajax({
-        url: Drupal.url('sapi/js/send'),
+        url: Drupal.url('sapi/js/capture'),
         type: 'POST',
         data: {
           'action': action,
