@@ -9,13 +9,13 @@ namespace Drupal\sapi;
  */
 interface StatisticsItemInterface {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAction();
+  /**
+   * {@inheritdoc}
+   */
+  public function getAction();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUri();
+  /**
+   * {@inheritdoc}
+   */
+  public function getUri();
 }
