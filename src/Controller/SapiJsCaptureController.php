@@ -4,6 +4,8 @@ namespace Drupal\sapi\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\sapi\SapiDispatcherInterface;
+use Drupal\sapi\StatisticsItem;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +21,18 @@ class SapiJsCaptureController extends ControllerBase implements ContainerInjecti
 
   /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
   protected $requestStack;
+  /** @var \Drupal\sapi\SapiDispatcherInterface $sapiDispatcher */
+  protected $sapiDispatcher;
 
   /**
    * SapiJsCaptureController constructor.
    *
-   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   * @param \Drupal\sapi\SapiDispatcherInterface $sapiDispatcher
    */
-  public function __construct(RequestStack $request_stack) {
-    $this->requestStack = $request_stack;
+  public function __construct(RequestStack $requestStack, SapiDispatcherInterface $sapiDispatcher) {
+    $this->requestStack = $requestStack;
+    $this->sapiDispatcher = $sapiDispatcher;
   }
 
   /**
@@ -34,7 +40,8 @@ class SapiJsCaptureController extends ControllerBase implements ContainerInjecti
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('request_stack')
+      $container->get('request_stack'),
+      $container->get('sapi.dispatcher')
     );
   }
 
@@ -53,7 +60,11 @@ class SapiJsCaptureController extends ControllerBase implements ContainerInjecti
 
     if (!empty($action) && !empty($uri)) {
       try {
-        // @todo Call the service.
+        // Create new statistics item.
+        $item = new StatisticsItem($action, $uri);
+        // Send to SAPI dispatcher.
+        $this->sapiDispatcher->dispatch($item);
+
         return new Response('OK', 200);
       } catch (\Exception $e) {
         throw new HttpException(500, 'Internal Server Error', $e);
