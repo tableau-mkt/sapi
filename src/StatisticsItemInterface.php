@@ -2,8 +2,6 @@
 
 namespace Drupal\sapi;
 
-use Drupal\sapi\StatisticsItemInterface;
-
 /**
  * Interface StatisticsItemInterface.
  *
@@ -11,4 +9,13 @@ use Drupal\sapi\StatisticsItemInterface;
  */
 interface StatisticsItemInterface {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getAction();
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getUri();
 }
