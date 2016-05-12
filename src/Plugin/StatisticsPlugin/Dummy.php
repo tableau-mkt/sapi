@@ -3,6 +3,7 @@
 namespace Drupal\sapi\Plugin\StatisticsPlugin;
 
 use Drupal\sapi\Plugin\StatisticsPluginInterface;
+use Drupal\sapi\Plugin\StatisticsPluginBase;
 
 /**
  * @StatisticsPlugin(
@@ -10,7 +11,7 @@ use Drupal\sapi\Plugin\StatisticsPluginInterface;
  *  label = "Dummy label"
  * )
  */
-class Dummmy implements StatisticsPluginInterface {
+class Dummmy extends StatisticsPluginBase implements StatisticsPluginInterface {
 
   /**
    * {@inheritdoc}
