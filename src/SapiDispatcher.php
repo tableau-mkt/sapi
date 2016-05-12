@@ -17,21 +17,21 @@ class SapiDispatcher implements SapiDispatcherInterface {
   /**
    * Drupal\Core\Config\ConfigManager definition.
    *
-   * @var Drupal\Core\Config\ConfigManager
+   * @var \Drupal\Core\Config\ConfigManager
    */
   protected $configManager;
 
   /**
    * Drupal\Core\Session\AccountProxy definition.
    *
-   * @var Drupal\Core\Session\AccountProxy
+   * @var \Drupal\Core\Session\AccountProxy
    */
   protected $currentUser;
 
   /**
    * Drupal\Core\Routing\CurrentRouteMatch definition.
    *
-   * @var Drupal\Core\Routing\CurrentRouteMatch
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
    */
   protected $currentRouteMatch;
   
