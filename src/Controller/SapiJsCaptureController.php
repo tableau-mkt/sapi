@@ -61,10 +61,7 @@ class SapiJsCaptureController extends ControllerBase implements ContainerInjecti
     if (!empty($action) && !empty($uri)) {
       try {
         // Create new statistics item.
-        $item = new StatisticsItem([
-          'action' => $action,
-          'uri' => $uri,
-        ]);
+        $item = new StatisticsItem($action, $uri);
         // Send to SAPI dispatcher.
         $this->sapiDispatcher->dispatch($item);
 
