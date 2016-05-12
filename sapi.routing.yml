@@ -6,3 +6,13 @@ sapi.sapi_js_capture:
   requirements:
     _permission: 'sapi capture js actions'
   methods: ['POST']
+
+sapi.statistics_plugin_list_form:
+  path: '/admin/config/sapi/statistics-plugins'
+  defaults:
+    _form: '\Drupal\sapi\Form\StatisticsPluginListForm'
+    _title: 'Statistics plugins'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
