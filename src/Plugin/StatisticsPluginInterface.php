@@ -10,6 +10,9 @@ use Drupal\sapi;
  */
 interface StatisticsPluginInterface extends PluginInspectionInterface {
 
+  /**
+   * process() method which analize the data received from dispatcher service
+   */
   public function process(StatisticsItemIterface $item);
 
 }
