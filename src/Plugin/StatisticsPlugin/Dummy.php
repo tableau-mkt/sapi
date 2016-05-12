@@ -12,4 +12,8 @@ use Drupal\sapi\Plugin\StatisticsPluginInterface;
  */
 class Dummmy implements StatisticsPluginInterface {
 
+    public function process(StatisticsItemIterface $item){
+      $message = $item->getAction();
+      \Drupal::logger('SAPI')->notice($message);
+    }
 }
