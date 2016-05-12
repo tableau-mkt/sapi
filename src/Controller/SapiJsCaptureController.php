@@ -65,7 +65,7 @@ class SapiJsCaptureController extends ControllerBase implements ContainerInjecti
           'action' => $action,
           'uri' => $uri,
         ]);
-        // Dispatch to SAPI dispatcher.
+        // Send to SAPI dispatcher.
         $this->sapiDispatcher->dispatch($item);
 
         return new Response('OK', 200);
