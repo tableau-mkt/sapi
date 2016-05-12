@@ -5,7 +5,6 @@ namespace Drupal\sapi;
 use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Routing\CurrentRouteMatch;
-use Drupal\sapi\StatisticsItemInterface;
 
 /**
  * Class SapiDispatcher.
@@ -17,21 +16,21 @@ class SapiDispatcher implements SapiDispatcherInterface {
   /**
    * Drupal\Core\Config\ConfigManager definition.
    *
-   * @var Drupal\Core\Config\ConfigManager
+   * @var \Drupal\Core\Config\ConfigManager
    */
   protected $configManager;
 
   /**
    * Drupal\Core\Session\AccountProxy definition.
    *
-   * @var Drupal\Core\Session\AccountProxy
+   * @var \Drupal\Core\Session\AccountProxy
    */
   protected $currentUser;
 
   /**
    * Drupal\Core\Routing\CurrentRouteMatch definition.
    *
-   * @var Drupal\Core\Routing\CurrentRouteMatch
+   * @var \Drupal\Core\Routing\CurrentRouteMatch
    */
   protected $currentRouteMatch;
   
