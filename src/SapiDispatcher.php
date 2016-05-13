@@ -5,6 +5,8 @@ namespace Drupal\sapi;
 use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Routing\CurrentRouteMatch;
+use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\sapi\StatisticsItemInterface;
 
 /**
  * Class SapiDispatcher.
@@ -52,13 +54,13 @@ class SapiDispatcher implements SapiDispatcherInterface {
     $this->configManager = $configManager;
     $this->currentUser = $currentUser;
     $this->currentRouteMatch = $currentRouteMatch;
-    $this->statisticsPluginManager = \Drupal::service('plugin.manager.statisticsplugin');
+    $this->statisticsPluginManager = $statisticsPluginManager;
   }
 
    /**
     * Dispatches the statistics item to interested parties.
     *
-    * @param StatisticsItemInterface $item
+    * @param \Drupal\sapi\StatisticsItemInterface $item
     *
     * @return void
    */
