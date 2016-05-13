@@ -14,9 +14,9 @@ entity.sapi_data_type.collection:
   parent: sapi_data.sapi_data_settings_form
   weight: 99
 
-sapi_data.sapi_data_settings_form:
-  title: 'SAPI Data settings'
-  route_name: sapi_data.sapi_data_settings_form
+sapi_data.sapi_data_structure:
+  title: 'SAPI Data'
+  route_name: entity.sapi_data_type.collection
   description: 'Manage the SAPI Data types and entries.'
   parent: system.admin_structure
 

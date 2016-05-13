@@ -1,16 +1,16 @@
 # SAPI Data listing in SAPI data page
-sapi_data.sapi_data_settings_form:
-  route_name: sapi_data.sapi_data_settings_form
-  base_route: sapi_data.sapi_data_settings_form
-  title: 'Settings'
 entity.sapi_data_type.collection:
   route_name: entity.sapi_data_type.collection
-  base_route: sapi_data.sapi_data_settings_form
+  base_route: entity.sapi_data_type.collection
   title: 'Data Types'
 entity.sapi_data.collection:
   route_name: entity.sapi_data.collection
-  base_route: sapi_data.sapi_data_settings_form
+  base_route: entity.sapi_data_type.collection
   title: 'Data Entries'
+sapi_data.sapi_data_settings_form:
+  route_name: sapi_data.sapi_data_settings_form
+  base_route: entity.sapi_data_type.collection
+  title: 'Settings'
 
 # SAPI Data entry routing definition
 entity.sapi_data.canonical:
