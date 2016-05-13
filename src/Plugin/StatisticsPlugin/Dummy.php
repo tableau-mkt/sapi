@@ -12,7 +12,7 @@ use Drupal\sapi\StatisticsItemInterface;
  *  label = "Dummy label"
  * )
  */
-class Dummmy extends StatisticsPluginBase implements StatisticsPluginInterface {
+class Dummy extends StatisticsPluginBase implements StatisticsPluginInterface {
 
   /**
    * {@inheritdoc}
