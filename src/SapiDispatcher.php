@@ -6,7 +6,6 @@ use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Component\Plugin\PluginManagerInterface;
-use Drupal\sapi\StatisticsItemInterface;
 
 /**
  * Class SapiDispatcher.
@@ -44,6 +43,7 @@ class SapiDispatcher implements SapiDispatcherInterface {
   protected $statisticsPluginManager;
 
   /**
+   * SapiDispatcher constructor.
    *
    * @param \Drupal\Core\Config\ConfigManager $configManager
    * @param \Drupal\Core\Session\AccountProxy $currentUser
@@ -64,13 +64,12 @@ class SapiDispatcher implements SapiDispatcherInterface {
     *
     * @return void
    */
-  public function dispatch(StatisticsItemInterface $item){
+  public function dispatch(StatisticsItemInterface $item) {
     /** @var \Drupal\sapi\Plugin\StatisticsPluginInterface $instance */
     foreach ($this->statisticsPluginManager->getDefinitions() as $pluginDefinition) {
       $instance = $this->statisticsPluginManager->createInstance($pluginDefinition['id']);
       $instance->process($item);
     }
-
   }
 
 }
