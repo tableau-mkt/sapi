@@ -14,10 +14,18 @@ by creating entity instances.
 ````
 <?php
 
-/** var \Drupal\sapi\SAPIDataInterface $entry */
+/**
+ * If we have a SAPI data bundle/type called MySAPIDataType
+ * that has a field added called MyDataField, then we can
+ * create and save an entity like this
+ */
+
+$value = "new value";
+
+/** var \Drupal\sapi_data\SAPIDataInterface $entry */
 $entry = \Drupal::service('entity_type.manager')->getStorage('sapi_data')->create(['type'=>'MySAPIDataType']);
 
-$entry->MyField = $value;
+$entry->MyDataField = $value;
 
 $entry->save();
 
