@@ -3,20 +3,23 @@
 namespace Drupal\sapi\Plugin;
 
 use Drupal\Component\Plugin\PluginInspectionInterface;
-use Drupal\sapi\StatisticsItemIterface;
+use Drupal\sapi\StatisticsItemInterface;
 
 /**
- * Defines an interface for Statistics plugin plugins.
+ * Interface StatisticsPluginInterface
+ *
+ * Defines an interface for plugins of type "StatisticsPlugin".
  */
 interface StatisticsPluginInterface extends PluginInspectionInterface {
 
   /**
-   * process() method which analize and processed the data received
-   * from StatisticsItemIterface
+   * Processes the statistics item and performs an arbitrary action upon it
+   * (e.g., logs, aggregates).
    *
-   * @param StatisticsItemIterface $item
+   * @param StatisticsItemInterface $item
    *
+   * @return void
    */
-  public function process(StatisticsItemIterface $item);
+  public function process(StatisticsItemInterface $item);
 
 }
