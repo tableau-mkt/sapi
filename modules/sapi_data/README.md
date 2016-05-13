@@ -9,6 +9,24 @@ Any module that creates plugins can create a new bundle and
 assign fields to it.  Plugins can then create data entries
 by creating entity instances.
 
+## Management
+
+The SAPI data structure pages holds most of the controls
+
+    /admin/structure/sapi
+
+- data entry types : manage the type bundles
+- data entries : manage the recorded entries
+- settings : a settings form (currently empty)
+
+### Entry types
+
+Here you can create different data bundles
+
+### Entries
+
+Here you can manage the actual entry entities themselves
+
 ## Creating a Data Entry
 
 ````
