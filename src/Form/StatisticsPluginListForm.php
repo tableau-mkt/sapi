@@ -79,7 +79,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#default_value' => $this->config('sapi.statistics_plugins')->get('enabled'),
     ];
 
-    /** @var \Drupal\sapi\Plugin\StatisticsPluginInterface $instance */
+    // Loop through the statistics plugins.
     foreach ($this->statisticsPluginManager->getDefinitions() as $pluginDefinition) {
       $id = $pluginDefinition['id'];
       $form['plugins']['statistics_plugins'][$id]['id'] = array(
