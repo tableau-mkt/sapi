@@ -8,7 +8,7 @@ use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
 /**
- * Defines a class to build a listing of SAPI Data entry entities.
+ * Defines a class to build a listing of Statistics API Data entry entities.
  *
  * @ingroup sapi_data
  */
@@ -18,7 +18,7 @@ class SAPIDataListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('SAPI Data entry ID');
+    $header['id'] = $this->t('Statistics API Data entry ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }

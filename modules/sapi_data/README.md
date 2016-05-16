@@ -1,8 +1,8 @@
-SAPI DATA
+Statistics API DATA
 ---------
 
 This module provided a custom content entity, meant for
-SAPI plugins to use to record statistical information.
+Statistics API plugins to use to record statistical information.
 
 The primary component is a bundles custom content entity.
 Any module that creates plugins can create a new bundle and
@@ -11,7 +11,7 @@ by creating entity instances.
 
 ## Management
 
-The SAPI data structure pages holds most of the controls
+The Statistics API data structure pages holds most of the controls
 
     /admin/structure/sapi
 

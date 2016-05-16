@@ -6,7 +6,7 @@ use Drupal\views\EntityViewsData;
 use Drupal\views\EntityViewsDataInterface;
 
 /**
- * Provides Views data for SAPI Data entry entities.
+ * Provides Views data for Statistics API Data entry entities.
  */
 class SAPIDataViewsData extends EntityViewsData implements EntityViewsDataInterface {
   /**
@@ -17,8 +17,8 @@ class SAPIDataViewsData extends EntityViewsData implements EntityViewsDataInterf
 
     $data['sapi_data']['table']['base'] = array(
       'field' => 'id',
-      'title' => $this->t('SAPI Data entry'),
-      'help' => $this->t('The SAPI Data entry ID.'),
+      'title' => $this->t('Statistics API Data entry'),
+      'help' => $this->t('The Statistics API Data entry ID.'),
     );
 
     return $data;

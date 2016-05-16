@@ -23,7 +23,7 @@ class SAPIDataTypeForm extends EntityForm {
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
       '#default_value' => $sapi_data_type->label(),
-      '#description' => $this->t("Label for the SAPI Data entry type."),
+      '#description' => $this->t("Label for the Statistics API Data entry type."),
       '#required' => TRUE,
     );
 
@@ -50,13 +50,13 @@ class SAPIDataTypeForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label SAPI Data entry type.', [
+        drupal_set_message($this->t('Created the %label Statistics API Data entry type.', [
           '%label' => $sapi_data_type->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label SAPI Data entry type.', [
+        drupal_set_message($this->t('Saved the %label Statistics API Data entry type.', [
           '%label' => $sapi_data_type->label(),
         ]));
     }

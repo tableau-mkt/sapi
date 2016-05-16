@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Builds the form to delete SAPI Data entry type entities.
+ * Builds the form to delete Statistics API Data entry type entities.
  */
 class SAPIDataTypeDeleteForm extends EntityConfirmFormBase {
   /**

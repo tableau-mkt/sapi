@@ -16,7 +16,7 @@ function sapi_data_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.sapi_data':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('SAPI centralized data tracking') . '</p>';
+      $output .= '<p>' . t('Statistics API centralized data tracking') . '</p>';
       return $output;
 
     default:

@@ -4,7 +4,7 @@
  * @file
  * Contains sapi_data.page.inc.
  *
- * Page callback for SAPI Data entry entities.
+ * Page callback for Statistics API Data entry entities.
  */
 
 use Drupal\Core\Render\Element;
@@ -12,7 +12,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 
 /**
- * Prepares variables for SAPI Data entry templates.
+ * Prepares variables for Statistics API Data entry templates.
  *
  * Default template: sapi_data.html.twig.
  *

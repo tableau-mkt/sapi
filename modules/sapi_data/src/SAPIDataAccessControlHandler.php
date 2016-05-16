@@ -8,7 +8,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 
 /**
- * Access controller for the SAPI Data entry entity.
+ * Access controller for the Statistics API Data entry entity.
  *
  * @see \Drupal\sapi_data\Entity\SAPIData.
  */

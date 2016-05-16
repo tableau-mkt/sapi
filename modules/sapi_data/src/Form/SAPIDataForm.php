@@ -6,7 +6,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for SAPI Data entry edit forms.
+ * Form controller for Statistics API Data entry edit forms.
  *
  * @ingroup sapi_data
  */
@@ -19,8 +19,6 @@ class SAPIDataForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
     $entity = $this->entity;
 
-    
-    
     return $form;
   }
 
@@ -33,13 +31,13 @@ class SAPIDataForm extends ContentEntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label SAPI Data entry.', [
+        drupal_set_message($this->t('Created the %label Statistics API Data entry.', [
           '%label' => $entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label SAPI Data entry.', [
+        drupal_set_message($this->t('Saved the %label Statistics API Data entry.', [
           '%label' => $entity->label(),
         ]));
     }

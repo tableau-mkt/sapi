@@ -1,6 +1,6 @@
 sapi_data.sapi_data_type.*:
   type: config_entity
-  label: 'SAPI Data entry type config'
+  label: 'Statistics API Data entry type config'
   mapping:
     id:
       type: string

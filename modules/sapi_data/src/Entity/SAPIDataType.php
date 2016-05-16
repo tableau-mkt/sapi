@@ -6,7 +6,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
 use Drupal\sapi_data\SAPIDataTypeInterface;
 
 /**
- * Defines the SAPI Data entry type entity.
+ * Defines the Statistics API Data entry type entity.
  *
  * @ConfigEntityType(
  *   id = "sapi_data_type",
@@ -41,14 +41,14 @@ use Drupal\sapi_data\SAPIDataTypeInterface;
  */
 class SAPIDataType extends ConfigEntityBundleBase implements SAPIDataTypeInterface {
   /**
-   * The SAPI Data entry type ID.
+   * The Statistics API Data entry type ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The SAPI Data entry type label.
+   * The Statistics API Data entry type label.
    *
    * @var string
    */

@@ -52,7 +52,7 @@ class SAPIDataAddController extends ControllerBase {
       if (count($types) === 0) {
         return array(
           '#markup' => $this->t('You have not created any %bundle types yet. @link to add a new type.', [
-            '%bundle' => 'SAPI Data entry',
+            '%bundle' => 'Statistics API Data entry',
             '@link' => $this->l($this->t('Go to the type creation page'), Url::fromRoute('entity.sapi_data_type.add_form')),
           ]),
         );

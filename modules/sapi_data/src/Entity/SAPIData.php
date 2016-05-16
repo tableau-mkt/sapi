@@ -11,14 +11,14 @@ use Drupal\sapi_data\SAPIDataInterface;
 use Drupal\user\UserInterface;
 
 /**
- * Defines the SAPI Data entry entity.
+ * Defines the Statistics API Data entry entity.
  *
  * @ingroup sapi_data
  *
  * @ContentEntityType(
  *   id = "sapi_data",
- *   label = @Translation("SAPI Data entry"),
- *   bundle_label = @Translation("SAPI Data entry type"),
+ *   label = @Translation("Statistics API Data entry"),
+ *   bundle_label = @Translation("Statistics API Data entry type"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\sapi_data\SAPIDataListBuilder",
@@ -157,21 +157,21 @@ class SAPIData extends ContentEntityBase implements SAPIDataInterface {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
-      ->setDescription(t('The ID of the SAPI Data entry entity.'))
+      ->setDescription(t('The ID of the Statistics API Data entry entity.'))
       ->setReadOnly(TRUE);
     $fields['type'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Type'))
-      ->setDescription(t('The SAPI Data entry type/bundle.'))
+      ->setDescription(t('The Statistics API Data entry type/bundle.'))
       ->setSetting('target_type', 'sapi_data_type')
       ->setRequired(TRUE);
     $fields['uuid'] = BaseFieldDefinition::create('uuid')
       ->setLabel(t('UUID'))
-      ->setDescription(t('The UUID of the SAPI Data entry entity.'))
+      ->setDescription(t('The UUID of the Statistics API Data entry entity.'))
       ->setReadOnly(TRUE);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the SAPI Data entry entity.'))
+      ->setDescription(t('The user ID of author of the Statistics API Data entry entity.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
@@ -197,7 +197,7 @@ class SAPIData extends ContentEntityBase implements SAPIDataInterface {
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Name'))
-      ->setDescription(t('The name of the SAPI Data entry entity.'))
+      ->setDescription(t('The name of the Statistics API Data entry entity.'))
       ->setSettings(array(
         'max_length' => 50,
         'text_processing' => 0,
@@ -217,12 +217,12 @@ class SAPIData extends ContentEntityBase implements SAPIDataInterface {
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the SAPI Data entry is published.'))
+      ->setDescription(t('A boolean indicating whether the Statistics API Data entry is published.'))
       ->setDefaultValue(TRUE);
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))
-      ->setDescription(t('The language code for the SAPI Data entry entity.'))
+      ->setDescription(t('The language code for the Statistics API Data entry entity.'))
       ->setDisplayOptions('form', array(
         'type' => 'language_select',
         'weight' => 10,
