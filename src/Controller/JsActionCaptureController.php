@@ -4,7 +4,7 @@ namespace Drupal\sapi\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\sapi\SapiDispatcherInterface;
+use Drupal\sapi\DispatcherInterface;
 use Drupal\sapi\StatisticsItem;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -21,16 +21,16 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
 
   /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
   protected $requestStack;
-  /** @var \Drupal\sapi\SapiDispatcherInterface $sapiDispatcher */
+  /** @var \Drupal\sapi\DispatcherInterface $sapiDispatcher */
   protected $sapiDispatcher;
 
   /**
    * JsActionCaptureController constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   * @param \Drupal\sapi\SapiDispatcherInterface $sapiDispatcher
+   * @param \Drupal\sapi\DispatcherInterface $sapiDispatcher
    */
-  public function __construct(RequestStack $requestStack, SapiDispatcherInterface $sapiDispatcher) {
+  public function __construct(RequestStack $requestStack, DispatcherInterface $sapiDispatcher) {
     $this->requestStack = $requestStack;
     $this->sapiDispatcher = $sapiDispatcher;
   }
