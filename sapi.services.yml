@@ -3,5 +3,5 @@ services:
     class: Drupal\sapi\Plugin\StatisticsPluginManager
     parent: default_plugin_manager
   sapi.dispatcher:
-    class: Drupal\sapi\SapiDispatcher
+    class: Drupal\sapi\Dispatcher
     arguments: ["@config.manager", "@current_user", "@current_route_match", "@plugin.manager.statisticsplugin"]

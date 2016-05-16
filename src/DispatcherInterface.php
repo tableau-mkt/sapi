@@ -2,18 +2,16 @@
 
 namespace Drupal\sapi;
 
-use Drupal\sapi\StatisticsItemInterface;
-
 /**
- * Interface SapiDispatcherInterface.
+ * Interface DispatcherInterface.
  *
  * @package Drupal\sapi
  */
-interface SapiDispatcherInterface {
+interface DispatcherInterface {
 
    /**
     * Dispatches the statistics item to interested parties.
-    * 
+    *
     * @param StatisticsItemInterface $item
    */
   public function dispatch(StatisticsItemInterface $item);
