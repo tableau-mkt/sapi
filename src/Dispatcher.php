@@ -8,11 +8,11 @@ use Drupal\Core\Routing\CurrentRouteMatch;
 use Drupal\Component\Plugin\PluginManagerInterface;
 
 /**
- * Class SapiDispatcher.
+ * Class Dispatcher.
  *
  * @package Drupal\sapi
  */
-class SapiDispatcher implements SapiDispatcherInterface {
+class Dispatcher implements DispatcherInterface {
 
   /**
    * Drupal\Core\Config\ConfigManager definition.
@@ -43,7 +43,7 @@ class SapiDispatcher implements SapiDispatcherInterface {
   protected $statisticsPluginManager;
 
   /**
-   * SapiDispatcher constructor.
+   * Dispatcher constructor.
    *
    * @param \Drupal\Core\Config\ConfigManager $configManager
    * @param \Drupal\Core\Session\AccountProxy $currentUser
