@@ -18,7 +18,8 @@ class SAPIDataListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Statistics API Data entry ID');
+    $header['id'] = $this->t('ID');
+    $header['type'] = $this->t('Data entry type');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
@@ -29,10 +30,11 @@ class SAPIDataListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\sapi_data\Entity\SAPIData */
     $row['id'] = $entity->id();
+    $row['type'] = $entity->getType();
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.sapi_data.edit_form', array(
+        'entity.sapi_data.canonical', array(
           'sapi_data' => $entity->id(),
         )
       )
