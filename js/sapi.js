@@ -13,13 +13,13 @@
   Drupal.sapi = {
 
     /**
-     * Sends the action on the URI.
+     * Sends an action to Drupal for tracking.
      *
-     * @param {string} action
-     * @param {string} uri
+     * @param {string} type action type plugin create
+     * @param {Object} action keyed map of values to send to the plugin instance $configuration
      * @param {Object} options
      */
-    send: function(action, uri, options) {
+    send: function(type, action, options) {
       options = $.extend({
         'completeCallback': function(){},
         'successCallback': function(){},
@@ -27,11 +27,10 @@
       }, typeof options === 'object' ? options : {});
 
       $.ajax({
-        url: Drupal.url('sapi/js/capture'),
+        url: Drupal.url('sapi/js/action/'+type),
         type: 'POST',
         data: {
-          'action': action,
-          'uri': uri
+            action: action
         },
         dataType: 'json',
         timeout: 2000,
