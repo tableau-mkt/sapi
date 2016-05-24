@@ -17,7 +17,6 @@ interface DispatcherInterface {
    *
    * @return void
    *
-   * @todo should we pass anything into the handler plugin constructor?
    */
   public function dispatch(ActionTypeInterface $action);
 

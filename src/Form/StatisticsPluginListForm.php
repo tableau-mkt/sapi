@@ -76,19 +76,6 @@ class StatisticsPluginListForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $form['entity_events'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Configure entity events') ,
-      '#description' => $this->t('Configure the settings for the event tracker.')
-    ];
-    $form['entity_events']['event_route_subscriber'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Enable the entity events subscriber'),
-      '#description' => $this->t('Check this to enable the event subscriber which will listen for entity routes, and trigger actions based on them.'),
-      '#default value' => $this->config('sapi.entity_events')->get('event_route_subscriber')
-    ];
-    
-    
     $form['plugins'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Statistics plugins'),
@@ -146,10 +133,6 @@ class StatisticsPluginListForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
-
-    $this->config('sapi.entity_events')
-      ->set('event_route_subscriber', array_filter($form_state->getValue('event_route_subscriber')))
-      ->save();
 
     $this->config('sapi.action_types')
       ->set('enabled', array_filter($form_state->getValue('action_types')))

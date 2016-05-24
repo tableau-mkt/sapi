@@ -10,6 +10,11 @@ use Drupal\sapi\ActionTypeInterface;
  *   id = "dummy",
  *   label = "Dummy action item"
  * )
+ *
+ * A zero-requirements action plugin that can be used to test if actions are
+ * being sent properly to handlers.  You could use this for generic action
+ * triggers, but really actions should be more conservative.
+ *
  */
 class Dummy extends ActionTypeBase implements ActionTypeInterface {
 

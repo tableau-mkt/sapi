@@ -2,6 +2,7 @@
 
 namespace Drupal\sapi\Controller;
 
+use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\sapi\DispatcherInterface;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Drupal\Component\Plugin\PluginManagerInterface;
 
 /**
  * Class JsActionCaptureController.
@@ -51,7 +51,8 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
    * @param \Drupal\sapi\DispatcherInterface $sapiDispatcher
-   * @param ContainerInterface $container
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_type_manager
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    */
   public function __construct(RequestStack $requestStack, DispatcherInterface $sapiDispatcher, PluginManagerInterface $sapi_action_type_manager, ContainerInterface $container) {
     $this->requestStack = $requestStack;

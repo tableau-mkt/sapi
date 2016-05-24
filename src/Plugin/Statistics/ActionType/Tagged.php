@@ -10,6 +10,14 @@ use Drupal\sapi\ActionTypeInterface;
  *   id = "tagged",
  *   label = "Tagged action item"
  * )
+ *
+ * A taggeable action type, where a handler can compare tags to determine if
+ * it should process.  This action type holds no data other than the tag.
+ *
+ * To use this, pass in a tag when using the manager to create an instance,
+ * and then in your handler code, confirm that the plugin has the required
+ * tag.
+ *
  */
 class Tagged extends ActionTypeBase implements ActionTypeInterface {
 
