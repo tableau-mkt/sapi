@@ -63,9 +63,14 @@ class Dispatcher implements DispatcherInterface {
   public function dispatch(ActionTypeInterface $action) {
     /** @var \Drupal\sapi\ActionHandlerInterface $instance */
     foreach ($this->SAPIActionHandlerPluginManager->getDefinitions() as $pluginDefinition) {
-      /** @var \Drupal\sapi\ActionHandlerInterface $instance */
-      $instance = $this->SAPIActionHandlerPluginManager->createInstance($pluginDefinition['id']);
-      $instance->process($action);
+      try {
+        /** @var \Drupal\sapi\ActionHandlerInterface $instance */
+        $instance = $this->SAPIActionHandlerPluginManager->createInstance($pluginDefinition['id']);
+
+        $instance->process($action);
+      } catch (\Exception $e) {
+        \Drupal::logger('default')->error("Error during SAPI dispatch : ".$e->getMessage());
+      }
     }
   }
 
