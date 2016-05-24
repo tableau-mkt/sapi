@@ -7,7 +7,7 @@ use Drupal\Component\Annotation\Plugin;
 /**
  * Defines a Statistics action handler item annotation object.
  *
- * @see \Drupal\sapi\Plugin\ActionHandlerManager
+ * @see \Drupal\sapi\ActionHandlerManager
  * @see plugin_api
  *
  * @Annotation
