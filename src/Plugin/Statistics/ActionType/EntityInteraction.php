@@ -8,8 +8,8 @@ use Drupal\sapi\Exception\MissingPluginConfiguration;
 
 /**
  * @ActionType(
- *  id = "entity_action",
- *  label = "An interaction with an entity occured"
+ *  id = "entity_interaction",
+ *  label = "An interaction with an entity occurred"
  * )
  */
 class EntityAction extends ActionTypeBase {
