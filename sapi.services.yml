@@ -1,7 +1,7 @@
 services:
   sapi.dispatcher:
     class: Drupal\sapi\Dispatcher
-    arguments: [ "@plugin.manager.sapi_action_handler" ]
+    arguments: ["@plugin.manager.sapi_action_handler"]
 
   plugin.manager.sapi_action_type:
     class: Drupal\sapi\ActionTypeManager
