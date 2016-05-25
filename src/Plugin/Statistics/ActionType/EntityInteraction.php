@@ -11,6 +11,23 @@ use Drupal\sapi\Exception\MissingPluginConfiguration;
  *  id = "entity_interaction",
  *  label = "An interaction with an entity occurred"
  * )
+ *
+ * This actiontype holds information about an account interaction with an
+ * entity, and keeps the entity, the account, and a string interaction type
+ * value, which can be retrieved by any handler.
+ *
+ * @note the $entity may be empty in a case of "opening a create form" so it
+ * is not enforced, but an exception is thrown if no account nor action is
+ * provided during creation.
+ *
+ * To Create pass
+ *  $configuration = [
+ *    'entity' => \Drupal\Core\Entity\EntityInterface
+ *    'account' => \Drupal\Core\Session\AccountProxyInterface
+ *    'action' => string
+ *  ];
+ *
+ * @TODO should we pass \Drupal\user\UserInterface instead of AccountProxy?
  */
 class EntityInteraction extends ActionTypeBase {
   /**
@@ -31,6 +48,8 @@ class EntityInteraction extends ActionTypeBase {
    * Optionally an action mode
    *
    * For example: a view mode if that action if view or a form view mode
+   *
+   * @protected string $mode
    */
   protected $mode;
 

@@ -7,5 +7,5 @@ namespace Drupal\sapi\Exception;
  * construction, in the configuration array.
  */
 class MissingPluginConfiguration extends \Exception {
-  
+
 }
