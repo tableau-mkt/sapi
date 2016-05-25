@@ -31,17 +31,16 @@ class Dispatcher implements DispatcherInterface {
    * {@inheritdoc}
    */
   public function dispatch(ActionTypeInterface $action) {
+    /** @var []string $enabled */
     $enabled = \Drupal::config('sapi.action_handlers')->get('enabled');
-    /** @var \Drupal\sapi\ActionHandlerInterface $instance */
-    foreach ($this->SAPIActionHandlerPluginManager->getDefinitions() as $pluginDefinition) {
+    foreach ($enabled as $id) {
       try {
-        if (in_array($pluginDefinition['id'], $enabled)){
-          /** @var \Drupal\sapi\ActionHandlerInterface $instance */
-          $instance = $this->SAPIActionHandlerPluginManager->createInstance($pluginDefinition['id']);
-          $instance->process($action);
-        }
+        /** @var \Drupal\sapi\ActionHandlerInterface $instance */
+        $instance = $this->SAPIActionHandlerPluginManager->createInstance($id);
+        $instance->process($action);
       } catch (\Exception $e) {
-        \Drupal::logger('default')->error("Error during SAPI dispatch : ".$e->getMessage());
+        \Drupal::logger('default')
+          ->error("Error during SAPI dispatch : " . $e->getMessage());
       }
     }
   }
