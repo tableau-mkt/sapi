@@ -12,7 +12,7 @@ use Drupal\sapi\Exception\MissingPluginConfiguration;
  *  label = "An interaction with an entity occurred"
  * )
  */
-class EntityAction extends ActionTypeBase {
+class EntityInteraction extends ActionTypeBase {
   /**
    * @var \Drupal\Core\Entity\EntityInterface $entity
    */
