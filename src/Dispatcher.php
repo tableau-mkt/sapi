@@ -31,10 +31,10 @@ class Dispatcher implements DispatcherInterface {
    * {@inheritdoc}
    */
   public function dispatch(ActionTypeInterface $action) {
+    $enabled = \Drupal::config('sapi.action_handlers')->get('enabled');
     /** @var \Drupal\sapi\ActionHandlerInterface $instance */
     foreach ($this->SAPIActionHandlerPluginManager->getDefinitions() as $pluginDefinition) {
       try {
-        $enabled = \Drupal::config('sapi.action_handlers')->get('enabled');
         if (in_array($pluginDefinition['id'], $enabled)){
           /** @var \Drupal\sapi\ActionHandlerInterface $instance */
           $instance = $this->SAPIActionHandlerPluginManager->createInstance($pluginDefinition['id']);
