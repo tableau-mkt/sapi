@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - sapi_entity_interaction
+id: entity_interactions
+label: 'Entity interactions'

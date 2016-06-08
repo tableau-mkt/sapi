@@ -1,0 +1,13 @@
+name: Statistics API Entity Interaction
+type: module
+description: This module tracks user interactions(View, Create, Update) to any entity.
+core: 8.x
+package: Statistics
+dependencies:
+  - sapi
+  - sapi_data
+  - node
+  - taxonomy
+  - field
+  - datetime
+  - dynamic_entity_reference
