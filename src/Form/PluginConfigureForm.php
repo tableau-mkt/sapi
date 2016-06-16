@@ -20,43 +20,54 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 class PluginConfigureForm extends FormBase {
 
   /**
-   * Symfony\Component\HttpFoundation\RequestStack definition.
+   * Current request.
    *
    * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $request_stack;
+  protected $requestStack;
 
   /**
-   * Drupal\sapi\ActionHandlerManager definition.
+   * The statistics action handler plugin manager which will be used to create
+   * sapi plugin instance.
    *
    * @var \Drupal\sapi\ActionHandlerManager
    */
-  protected $plugin_manager_sapi_action_handler;
+  protected $SapiActionHandlerManager;
 
   /**
-   * Drupal\Core\Config\ConfigFactory definition.
+   * ConfigFactory used to store and retrieve plugin configurations.
    *
    * @var \Drupal\Core\Config\ConfigFactory
    */
-  protected $config_factory;
+  protected $configFactory;
+
+    /**
+   * PluginConfigureForm constructor.
+   *
+   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   * @param \Drupal\sapi\ActionHandlerManager $SapiActionHandlerManager
+   * @param \Drupal\Core\Config\ConfigFactory $configFactory
+   */
   public function __construct(
-    RequestStack $request_stack,
-    ActionHandlerManager $plugin_manager_sapi_action_handler,
-    ConfigFactory $config_factory
+    RequestStack $requestStack,
+    ActionHandlerManager $SapiActionHandlerManager,
+    ConfigFactory $configFactory
   ) {
-    $this->request_stack = $request_stack;
-    $this->plugin_manager_sapi_action_handler = $plugin_manager_sapi_action_handler;
-    $this->config_factory = $config_factory;
+    $this->requestStack = $requestStack;
+    $this->SapiActionHandlerManager = $SapiActionHandlerManager;
+    $this->configFactory = $configFactory;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('request_stack'),
+      $container->get('requestStack'),
       $container->get('plugin.manager.sapi_action_handler'),
       $container->get('config.factory')
     );
   }
-
 
   /**
    * {@inheritdoc}
@@ -69,11 +80,11 @@ class PluginConfigureForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $id = $this->request_stack->getCurrentRequest()->get('plugin');
+    $id = $this->requestStack->getCurrentRequest()->get('plugin');
     $form['#plugin_id'] = $id;
     try {
       /** @var \Drupal\Core\Plugin\PluginFormInterface $instance */
-      $instance = $this->plugin_manager_sapi_action_handler->createInstance($id);
+      $instance = $this->SapiActionHandlerManager->createInstance($id);
       if ($instance instanceof PluginFormInterface){
         $form += $instance->buildConfigurationForm($form, $form_state);
       }

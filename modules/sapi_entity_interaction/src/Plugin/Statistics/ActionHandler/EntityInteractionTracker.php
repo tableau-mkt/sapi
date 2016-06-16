@@ -127,7 +127,7 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       /** @var \Drupal\user\Entity\Role $role */
       $all_roles[$role->id()] = $role->label();
     }
-    $form['plugin'] = array(
+    $form['roles'] = array(
       '#type' => 'checkboxes',
       '#title' => 'Tracked roles',
       '#description' => 'User roles to track.',
