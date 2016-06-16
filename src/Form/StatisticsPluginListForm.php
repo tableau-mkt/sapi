@@ -6,7 +6,9 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Url;
 
 /**
  * Class StatisticsPluginListForm.
@@ -92,9 +94,11 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#tableselect' => TRUE,
       '#default_value' => $this->config('sapi.action_types')->get('enabled'),
     ];
+
     // Loop through the statistics plugins.
     foreach ($this->sapi_action_type_manager->getDefinitions() as $pluginDefinition) {
       $id = $pluginDefinition['id'];
+
       $label = $pluginDefinition['label'];
 
       $form['plugins']['action_types'][$id] = [
@@ -107,23 +111,40 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#type' => 'table',
       '#header' => [
         'id' => $this->t('ID'),
-        'label' => $this->t('Label')
+        'label' => $this->t('Label'),
+        'operations' => $this->t('Operations')
       ],
       '#empty' => $this->t('There are no plugins yet.'),
       '#tableselect' => TRUE,
       '#default_value' => $this->config('sapi.action_handlers')->get('enabled'),
     ];
+
     // Loop through the statistics plugins.
     foreach ($this->sapi_action_handler_manager->getDefinitions() as $pluginDefinition) {
       $id = $pluginDefinition['id'];
+
       $label = $pluginDefinition['label'];
 
       $form['plugins']['action_handlers'][$id] = [
         'id' => ['#plain_text' => $id],
         'label' => ['#plain_text' => $label]
       ];
-    }
 
+      $form['plugins']['action_handlers'][$id]['operations'] = [
+        '#type' => 'operations',
+      ];
+
+      // TODO: try creating plugins
+      $instance = $this->sapi_action_handler_manager->createInstance($id);
+
+      if ($instance instanceof PluginFormInterface){
+        $form['plugins']['action_handlers'][$id]['operations']['#links']['edit'] = [
+          'title' => $this->t('Edit'),
+          'url' => new Url('sapi.plugin_configure_form', ['plugin' => $id])
+        ];
+      }
+
+    }
 
     return parent::buildForm($form, $form_state);
   }

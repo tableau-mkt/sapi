@@ -2,6 +2,7 @@
 
 namespace Drupal\sapi_entity_interaction\Plugin\Statistics\ActionHandler;
 
+use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\sapi\ActionHandlerInterface;
 use Drupal\sapi\ActionHandlerBase;
 use Drupal\sapi\ActionTypeInterface;
@@ -10,6 +11,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\Role;
 
 /**
  * This is a SAPI handler plugin used to track any entity interactions (view, update and create).
@@ -19,7 +22,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
  *  label = "Track any entity interactions"
  * )
  */
-class EntityInteractionTracker extends ActionHandlerBase implements ActionHandlerInterface, ContainerFactoryPluginInterface{
+class EntityInteractionTracker extends ActionHandlerBase implements ActionHandlerInterface, ContainerFactoryPluginInterface, PluginFormInterface{
 
   /**
    * EntityTypeManager used to get entity storage for sapi_data items, which is
@@ -112,6 +115,46 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       \Drupal::logger('sapi')->warning('Could not create SAPI data');
     }
 
+  }
+
+  /**
+   *{@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    /** @var array $all_roles Array of all available roles */
+    $all_roles = [];
+    foreach (Role::loadMultiple() as $role) {
+      /** @var \Drupal\user\Entity\Role $role */
+      $all_roles[$role->id()] = $role->label();
+    }
+    $form['plugin'] = array(
+      '#type' => 'checkboxes',
+      '#title' => 'Tracked roles',
+      '#description' => 'User roles to track.',
+      '#options' => $all_roles
+    );
+    $form['actions']['#type'] = 'actions';
+    $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Save configuration',
+      '#button_type' => 'primary',
+    );
+
+    return $form;
+  }
+
+  /**
+   *{@inheritdoc}
+   */
+  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
+    // TODO: Implement validateConfigurationForm() method.
+  }
+
+  /**
+   *{@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    // TODO: Implement submitConfigurationForm() method.
   }
 
 }

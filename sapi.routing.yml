@@ -16,3 +16,13 @@ sapi.statistics_plugin_list_form:
     _permission: 'access administration pages'
   options:
     _admin_route: TRUE
+
+sapi.plugin_configure_form:
+  path: '/admin/config/sapi/plugin/{plugin}'
+  defaults:
+    _form: '\Drupal\sapi\Form\PluginConfigureForm'
+    _title: 'Statistics plugin configuration'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
