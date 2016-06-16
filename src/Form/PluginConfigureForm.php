@@ -41,7 +41,7 @@ class PluginConfigureForm extends FormBase {
    */
   protected $configFactory;
 
-    /**
+  /**
    * PluginConfigureForm constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
@@ -80,6 +80,7 @@ class PluginConfigureForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    /** @var string $id */
     $id = $this->requestStack->getCurrentRequest()->get('plugin');
     $form['#plugin_id'] = $id;
     try {
