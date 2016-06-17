@@ -34,27 +34,7 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory ) {
     parent:: __construct($configuration, $plugin_id, $plugin_definition);
-      $this->setConfigFactory($config_factory);
-    }
-
-  /**
-   * Sets the config factory for this form.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory.
-   *
-   * @return $this
-   */
-  public function setConfigFactory(ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;
-    return $this;
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    drupal_set_message($this->t('The configuration options have been saved.'));
-  }
-
+  
 }
