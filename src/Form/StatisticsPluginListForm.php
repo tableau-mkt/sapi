@@ -6,7 +6,6 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Plugin\PluginFormInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Url;
 
@@ -134,8 +133,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
         '#type' => 'operations',
       ];
 
-      $interfaces = class_implements($pluginDefinition['class']);
-      if (isset($interfaces['Drupal\Core\Plugin\PluginFormInterface'])) {
+      if (isset(class_implements($pluginDefinition['class'])['Drupal\Core\Plugin\PluginFormInterface'])) {
         $form['plugins']['action_handlers'][$id]['operations']['#links']['edit'] = [
           'title' => $this->t('Edit'),
           'url' => new Url('sapi.plugin_configure_form', ['plugin' => $id])

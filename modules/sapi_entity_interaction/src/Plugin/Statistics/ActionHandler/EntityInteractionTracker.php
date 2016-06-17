@@ -2,9 +2,9 @@
 
 namespace Drupal\sapi_entity_interaction\Plugin\Statistics\ActionHandler;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
-use Drupal\sapi\ActionHandlerInterface;
-use Drupal\sapi\ActionHandlerBase;
+use Drupal\sapi\ConfigurableActionHandlerBase;
 use Drupal\sapi\ActionTypeInterface;
 use Drupal\sapi\Plugin\Statistics\ActionType\EntityInteraction;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -14,6 +14,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\Role;
 
+
 /**
  * This is a SAPI handler plugin used to track any entity interactions (view, update and create).
  *
@@ -22,7 +23,7 @@ use Drupal\user\Entity\Role;
  *  label = "Track any entity interactions"
  * )
  */
-class EntityInteractionTracker extends ActionHandlerBase implements ActionHandlerInterface, ContainerFactoryPluginInterface, PluginFormInterface{
+class EntityInteractionTracker extends ConfigurableActionHandlerBase implements ContainerFactoryPluginInterface, PluginFormInterface {
 
   /**
    * EntityTypeManager used to get entity storage for sapi_data items, which is
@@ -40,8 +41,8 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
    * @param mixed $plugin_definition
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entityTypeManager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $config_factory);
 
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -55,6 +56,7 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       $plugin_id,
       $plugin_definition,
 
+      $container->get('config.factory'),
       $container->get('entity_type.manager')
     );
   }
@@ -117,6 +119,10 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
 
   }
 
+  protected function getEditableConfigNames() {
+    return ['sapi.entity_interaction_config'];
+  }
+
   /**
    *{@inheritdoc}
    */
@@ -131,7 +137,8 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       '#type' => 'checkboxes',
       '#title' => 'Tracked roles',
       '#description' => 'User roles to track.',
-      '#options' => $all_roles
+      '#options' => $all_roles,
+      '#default_value' => $this->config('sapi.entity_interaction_config')->get('roles')
     );
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = array(
@@ -154,7 +161,9 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
    *{@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    // TODO: Implement submitConfigurationForm() method.
+    $this->config('sapi.entity_interaction_config')
+      ->set('roles', array_filter($form_state->getValue('roles')))
+      ->save();
   }
 
 }

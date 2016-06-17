@@ -42,6 +42,13 @@ class PluginConfigureForm extends FormBase {
   protected $configFactory;
 
   /**
+   * Requested plugin id.
+   *
+   * @var String $id
+   */
+  protected $id;
+
+  /**
    * PluginConfigureForm constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
@@ -56,6 +63,7 @@ class PluginConfigureForm extends FormBase {
     $this->requestStack = $requestStack;
     $this->SapiActionHandlerManager = $SapiActionHandlerManager;
     $this->configFactory = $configFactory;
+    $this->id = $requestStack->getCurrentRequest()->get('plugin');
   }
 
   /**
@@ -63,7 +71,7 @@ class PluginConfigureForm extends FormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('requestStack'),
+      $container->get('request_stack'),
       $container->get('plugin.manager.sapi_action_handler'),
       $container->get('config.factory')
     );
@@ -80,12 +88,10 @@ class PluginConfigureForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /** @var string $id */
-    $id = $this->requestStack->getCurrentRequest()->get('plugin');
-    $form['#plugin_id'] = $id;
+    $form['#plugin_id'] = $this->id;
     try {
       /** @var \Drupal\Core\Plugin\PluginFormInterface $instance */
-      $instance = $this->SapiActionHandlerManager->createInstance($id);
+      $instance = $this->SapiActionHandlerManager->createInstance($this->id);
       if ($instance instanceof PluginFormInterface){
         $form += $instance->buildConfigurationForm($form, $form_state);
       }
@@ -93,7 +99,7 @@ class PluginConfigureForm extends FormBase {
       \Drupal::logger('default')
         ->error("Error during SAPI plugin configure : " . $e->getMessage());
       if ($e instanceof PluginNotFoundException) {
-        throw new NotFoundHttpException('Plugin '.$id.' not found', $e);
+        throw new NotFoundHttpException('Plugin '.$this->id.' not found', $e);
       }
     }
     return $form;
@@ -103,15 +109,23 @@ class PluginConfigureForm extends FormBase {
    *{@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
-    // TODO: Call plugin form validation;
+
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // TODO: Call plugin form submit;
+    try {
+      /** @var \Drupal\Core\Plugin\PluginFormInterface $instance */
+      $instance = $this->SapiActionHandlerManager->createInstance($this->id);
+      if ($instance instanceof PluginFormInterface){
+        return $instance->submitConfigurationForm($form, $form_state);
+      }
+    } catch (\Exception $e) {
+      \Drupal::logger('default')
+        ->error("Error during SAPI plugin configuration submission : " . $e->getMessage());
+    }
   }
 
 
