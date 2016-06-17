@@ -160,7 +160,6 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
    *{@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    parent::submitConfigurationForm($form, $form_state);
     $this->config('sapi.entity_interaction_config')
       ->set('roles', array_filter($form_state->getValue('roles')))
       ->save();
