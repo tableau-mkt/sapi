@@ -53,3 +53,7 @@ The most common ay to extend sapi is to write handcler plugins, and triggers
 #### store/retriecve SAPI data
 
 SAPI data is typically stored using the custom content entity provided in the submodule "sapi_data"  You can interact with this data using any entity applications such as views.
+
+## TO join us
+
+Come and visit out Trello board: https://trello.com/b/fiBWGqdo/sapi2
