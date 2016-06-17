@@ -10,7 +10,8 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Base class for Statistics action handler plugins.
+ * Base class for Statistics action handler plugins that implements
+ * PluginFormInterface and provides configuration form.
  */
 abstract class ConfigurableActionHandlerBase extends PluginBase implements ActionHandlerInterface, PluginFormInterface {
   use ConfigFormBaseTrait;
@@ -19,20 +20,17 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
   /**
    * The config factory.
    *
-   * Subclasses should use the self::config() method, which may be overridden to
-   * address specific needs when loading config, rather than this property
-   * directly. See \Drupal\Core\Form\ConfigFormBase::config() for an example of
-   * this.
-   *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
-   * Constructs a \Drupal\system\ConfigFormBase object.
+   * Constructs a \Drupal\sapi\ConfigurableActionHandlerBase object.
    *
+   * @param array $configuration
+   * @param string $plugin_id
+   * @param array $plugin_definition
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The factory for configuration objects.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory ) {
     parent:: __construct($configuration, $plugin_id, $plugin_definition);
