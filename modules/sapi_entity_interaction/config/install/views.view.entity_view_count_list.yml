@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - sapi_entity_interaction
   config:
     - field.storage.sapi_data.field_entity_reference
     - sapi_data.sapi_data_type.entity_interactions

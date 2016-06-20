@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - sapi_entity_interaction
   config:
     - field.storage.sapi_data.field_interaction_type
     - field.storage.sapi_data.field_user

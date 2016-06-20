@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - sapi_entity_interaction
   config:
     - system.menu.admin
     - user.role.administrator

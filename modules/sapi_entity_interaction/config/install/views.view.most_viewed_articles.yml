@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - sapi_entity_interaction
   module:
     - node
     - sapi_data
