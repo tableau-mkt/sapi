@@ -7,7 +7,6 @@ use Drupal\Core\Form\ConfigFormBaseTrait;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Base class for Statistics action handler plugins that implements
@@ -35,6 +34,15 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory ) {
     parent:: __construct($configuration, $plugin_id, $plugin_definition);
     $this->configFactory = $config_factory;
+  }
+
+  /**
+   * Provides dynamic page title.
+   *
+   * @return string Returns a page title.
+   */
+  public function getTitle() {
+    return $this->t('Configure').' '.$this->getPluginId();
   }
   
 }

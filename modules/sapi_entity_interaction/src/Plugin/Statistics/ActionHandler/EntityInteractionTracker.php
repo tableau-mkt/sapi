@@ -68,7 +68,8 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
     /**
      * Only acts if $action is an EntityInteraction plugin type
      */
-    if (!($action instanceof EntityInteraction)) {
+    if (!($action instanceof EntityInteraction) ||
+      empty(array_intersect($action->getAccount()->getRoles(), $this->config('sapi.entity_interaction_config')->get('roles')))) {
       return;
     }
 

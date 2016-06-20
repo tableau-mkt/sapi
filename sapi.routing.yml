@@ -21,7 +21,7 @@ sapi.plugin_configure_form:
   path: '/admin/config/sapi/plugin/{plugin}'
   defaults:
     _form: '\Drupal\sapi\Form\PluginConfigureForm'
-    _title: 'Statistics plugin configuration'
+    _title_callback: '\Drupal\sapi\Form\PluginConfigureForm::getTitle'
   requirements:
     _permission: 'access administration pages'
   options:
