@@ -21,3 +21,19 @@ function sapi_entity_interaction_entity_insert(EntityInterface $entity) {
     \Drupal::service('sapi_entity_interaction.entity_interaction_collector')->actionTypeTrigger($entity,'Create');
   }
 }
+
+/**
+ * Implements hook_uninstall()
+ *
+ */
+function sapi_entity_interaction_uninstall(){
+  $configs = [
+    'field.field.sapi_data.entity_interactions.field_entity_reference',
+    'field.field.sapi_data.entity_interactions.field_interaction_type',
+    'field.field.sapi_data.entity_interactions.field_user',
+    'sapi.entity_interaction_config'
+  ];
+  foreach ($configs as $config) {
+    Drupal::configFactory()->getEditable($config)->delete();
+  }
+}

@@ -6,7 +6,6 @@ dependencies:
     - sapi_data.sapi_data_type.entity_interactions
   module:
     - dynamic_entity_reference
-    - sapi_entity_interaction
 id: sapi_data.entity_interactions.field_entity_reference
 field_name: field_entity_reference
 entity_type: sapi_data

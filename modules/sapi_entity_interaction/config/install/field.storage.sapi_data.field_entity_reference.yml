@@ -13,7 +13,9 @@ dependencies:
     - shortcut
     - taxonomy
     - user
-    - sapi_entity_interaction
+  enforced:
+    module:
+      - sapi_entity_interaction
 id: sapi_data.field_entity_reference
 field_name: field_entity_reference
 entity_type: sapi_data

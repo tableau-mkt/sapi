@@ -4,8 +4,6 @@ dependencies:
   config:
     - field.storage.sapi_data.field_interaction_type
     - sapi_data.sapi_data_type.entity_interactions
-  module:
-    - sapi_entity_interaction
 id: sapi_data.entity_interactions.field_interaction_type
 field_name: field_interaction_type
 entity_type: sapi_data

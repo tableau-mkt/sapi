@@ -2,19 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - views.view.hottest_users
+    - views.view.most_viewed_articles
   module:
     - views
+    - sapi_entity_interaction
   theme:
     - bartik
-id: views_block__hottest_users_biggest_contrib_users_block
+id: views_block__most_viewed_articles_most_viewed_articles_block
 theme: bartik
 region: sidebar_second
 weight: -8
 provider: null
-plugin: 'views_block:hottest_users-biggest_contrib_users_block'
+plugin: 'views_block:most_viewed_articles-most_viewed_articles_block'
 settings:
-  id: 'views_block:hottest_users-biggest_contrib_users_block'
+  id: 'views_block:most_viewed_articles-most_viewed_articles_block'
   label: ''
   provider: views
   label_display: visible
