@@ -6,7 +6,7 @@ dependencies:
     - user
   enforced:
     module:
-      - sapi_entity_interaction
+      - sapi_data
 id: sapi_data.field_user
 field_name: field_user
 entity_type: sapi_data

@@ -1,13 +1,11 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - sapi_entity_interaction
   config:
     - views.view.hottest_users
   module:
     - views
+    - sapi_entity_interaction
   theme:
     - bartik
 id: views_block__hottest_users_biggest_contrib_users_block
