@@ -8,55 +8,27 @@ use Drupal\sapi\ActionTypeInterface;
 /**
  * @ActionType (
  *   id = "tagged",
- *   label = "Tagged action item"
+ *   label = "Tagged action item",
+ *   context = {
+ *     "tag" = @ContextDefinition("string", label = @Translation("Tags"), multiple = true)
+ *   }
  * )
  *
  * A taggeable action type, where a handler can compare tags to determine if
  * it should process.  This action type holds no data other than the tag.
  *
- * To use this, pass in a tag when using the manager to create an instance,
- * and then in your handler code, confirm that the plugin has the required
- * tag.
+ * This is a fallback action that you can use, to easily tie a trigger to a
+ * handler, as you can assign any tag when the action is created, and any
+ * handler can easily try to match it as a test when running.
  *
  */
 class Tagged extends ActionTypeBase implements ActionTypeInterface {
 
   /**
-   * Store the action tag
-   *
-   * @protected string[] $tags
-   */
-  protected $tags;
-
-  /**
-   * Constructs a Drupal\Component\Plugin\PluginBase object.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-
-    if (isset($configuration['tags'])) {
-      $this->tags = $configuration['tags'];
-    }
-    else if (isset($configuration['tag'])) {
-      $this->tags = [ $configuration['tag'] ];
-    }
-    else {
-      $this->tags = [];
-    }
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function describe() {
-    return '['.__class__.'] I am tagged with: '. implode(',',$this->tags);
+    return '['.__class__.'] I am tagged with: '. implode(', ',$this->tags());
   }
 
   /**
@@ -68,7 +40,17 @@ class Tagged extends ActionTypeBase implements ActionTypeInterface {
    *   true if the tag parameter was found in the tag array
    */
   function hasTag($tag) {
-    return in_array($tag, $this->tags);
+    return in_array($tag, $this->tags());
   }
 
+  /**
+   * Retrieve all of the tags
+   *
+   * @return string[]
+   *   array of string tag values
+   */
+  function tags() {
+    $tags = $this->getContextValue('tag');
+    return is_array($tags) ? $tags : [];
+  }
 }

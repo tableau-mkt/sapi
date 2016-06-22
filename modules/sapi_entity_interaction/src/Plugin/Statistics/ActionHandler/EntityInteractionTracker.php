@@ -2,14 +2,15 @@
 
 namespace Drupal\sapi_entity_interaction\Plugin\Statistics\ActionHandler;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\sapi\ActionHandlerInterface;
 use Drupal\sapi\ActionHandlerBase;
 use Drupal\sapi\ActionTypeInterface;
-use Drupal\sapi\Plugin\Statistics\ActionType\EntityInteraction;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\sapi\Annotation\ActionHandler;
+use Drupal\sapi_entity_interaction\Plugin\Statistics\ActionType\EntityInteraction;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
  * This is a SAPI handler plugin used to track any entity interactions (view, update and create).
