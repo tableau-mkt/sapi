@@ -5,6 +5,7 @@ namespace Drupal\sapi\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\sapi\ConfigurableActionHandlerBase;
+use Drupal\sapi\Exception\MissingConfigurationObject;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\sapi\ActionHandlerManager;
@@ -73,15 +74,18 @@ class PluginConfigureForm extends FormBase {
     $this->id = $requestStack->getCurrentRequest()->get('plugin');
     try {
       $this->instance = $this->SapiActionHandlerManager->createInstance($this->id);
-      if (!($this->instance instanceof ConfigurableActionHandlerBase)){
-        throw new PluginNotFoundException('Plugin '.$this->id.' not instance of ConfigurableActionHandlerBase.', $e);
+      if (!($this->instance instanceof ConfigurableActionHandlerBase)) {
+        throw new PluginNotFoundException($this->id, 'Plugin: "' . $this->id . '" not instance of ConfigurableActionHandlerBase.');
       }
     } catch (\Exception $e) {
       \Drupal::logger('default')
         ->error("Error during SAPI plugin configure : " . $e->getMessage());
       if ($e instanceof PluginNotFoundException) {
-        throw new NotFoundHttpException('Plugin '.$this->id.' not found', $e);
+        throw new NotFoundHttpException($e);
       }
+    }
+    if (!$this->instance->getConfiguration()) {
+      throw new MissingConfigurationObject('Plugin: "' . $this->id . '" configuration object not found.');
     }
   }
 
@@ -108,6 +112,20 @@ class PluginConfigureForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form += $this->instance->buildConfigurationForm($form, $form_state);
+    $form['actions']['#type'] = 'actions';
+    $form['actions']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Save configuration',
+      '#button_type' => 'primary',
+    );
+    if (!empty($this->instance->defaultConfiguration())) {
+      $form['actions']['cancel'] = array(
+        '#type' => 'submit',
+        '#value' => 'Reset to defaults',
+        '#button_type' => 'secondary',
+        '#name' => 'reset'
+      );
+    }
     return $form;
   }
 
@@ -122,7 +140,11 @@ class PluginConfigureForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    return $this->instance->submitConfigurationForm($form, $form_state);
+    if ($form_state->getTriggeringElement()['#name'] == 'reset'){
+      $this->instance->resetFormToDefaults();
+    } else {
+      $this->instance->submitConfigurationForm($form, $form_state);
+    }
   }
 
   /**

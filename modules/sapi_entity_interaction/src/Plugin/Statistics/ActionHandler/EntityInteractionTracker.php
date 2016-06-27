@@ -38,6 +38,7 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
    * @param array $configuration
    * @param string $plugin_id
    * @param mixed $plugin_definition
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entityTypeManager) {
@@ -69,7 +70,7 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
      * Only acts if $action is an EntityInteraction plugin type
      */
     if (!($action instanceof EntityInteraction) ||
-      empty(array_intersect($action->getAccount()->getRoles(), $this->config('sapi.entity_interaction_config')->get('roles')))) {
+      empty(array_intersect($action->getAccount()->getRoles(), $this->configuration['roles']))) {
       return;
     }
 
@@ -119,8 +120,13 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
 
   }
 
-  protected function getEditableConfigNames() {
-    return ['sapi.entity_interaction_config'];
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return array(
+      'roles' => ['administrator', 'authenticated']
+    );
   }
 
   /**
@@ -138,32 +144,10 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
       '#title' => 'Tracked roles',
       '#description' => 'User roles to track.',
       '#options' => $all_roles,
-      '#default_value' => $this->config('sapi.entity_interaction_config')->get('roles')
-    );
-    $form['actions']['#type'] = 'actions';
-    $form['actions']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => 'Save configuration',
-      '#button_type' => 'primary',
+      '#default_value' => $this->configuration['roles']
     );
 
     return $form;
-  }
-
-  /**
-   *{@inheritdoc}
-   */
-  public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    // TODO: Implement validateConfigurationForm() method.
-  }
-
-  /**
-   *{@inheritdoc}
-   */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->config('sapi.entity_interaction_config')
-      ->set('roles', array_filter($form_state->getValue('roles')))
-      ->save();
   }
 
 }
