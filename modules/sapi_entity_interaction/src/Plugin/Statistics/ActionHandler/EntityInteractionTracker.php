@@ -125,7 +125,7 @@ class EntityInteractionTracker extends ConfigurableActionHandlerBase implements 
    */
   public function defaultConfiguration() {
     return array(
-      'roles' => ['administrator', 'authenticated']
+      'roles' => ['authenticated']
     );
   }
 

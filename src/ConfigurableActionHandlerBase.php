@@ -14,7 +14,7 @@ use Drupal\sapi\Exception\MissingConfigurationObject;
 /**
  * Base class for Statistics action handler plugins that implements
  * PluginFormInterface and provides configuration form.
- * Configuration file should use sapi.{plugin_id} namespace in order for
+ * Configuration file should use sapi.plugin.{plugin_id} namespace in order for
  * formSubmit to save to it automatically. Otherwise editableConfiguration
  * must be provided in plugin construct.
  */
@@ -46,7 +46,7 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory ) {
     $this->configFactory = $config_factory;
-    $this->editableConfiguration = 'sapi.'.$plugin_id;
+    $this->editableConfiguration = 'sapi.plugin.'.$plugin_id;
     parent:: __construct($configuration + $this->getConfiguration(), $plugin_id, $plugin_definition);
   }
 
@@ -84,12 +84,13 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
       '');
     $form_configurations = array_diff_key($form_state->getValues(), $form_base_keys);
     foreach ($form_configurations as $key => $value) {
+      /** Store in configuration only values that have been set in form */
       $this->configuration[$key] = is_array($form_state->getValue($key))
         ? array_filter($form_state->getValue($key))
         : $form_state->getValue($key);
     }
     if($this->setConfiguration($this->configuration)) {
-      drupal_set_message('Configuration has been saved successfully.');
+      drupal_set_message('Plugin: '.$this->getPluginId().' configurations has been saved successfully.');
     } else {
       throw new MissingConfigurationObject('Error saving configurations for plugin: ' . $this->getPluginId());
     }
@@ -133,6 +134,7 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    */
   public function resetFormToDefaults() {
     $this->setConfiguration($this->defaultConfiguration());
-    drupal_set_message('Plugin has been reset to default values.');
+    drupal_set_message('Plugin: '.$this->getPluginId().' has been reset to default values.');
   }
+  
 }
