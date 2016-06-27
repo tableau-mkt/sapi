@@ -1,7 +1,7 @@
 services:
   sapi_entity_interaction.entity_view_event_subscriber:
     class: Drupal\sapi_entity_interaction\EventSubscriber\EntityViewEventSubscriber
-    arguments: ["@current_user", "@sapi.dispatcher", "@plugin.manager.sapi_action_type", "@current_route_match"]
+    arguments: ["@current_route_match", "@sapi_entity_interaction.entity_interaction_collector"]
     tags:
       - { name: event_subscriber }
   sapi_entity_interaction.entity_interaction_collector:

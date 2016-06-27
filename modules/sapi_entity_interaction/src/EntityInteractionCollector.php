@@ -55,7 +55,7 @@ class EntityInteractionCollector {
   function actionTypeTrigger(EntityInterface $entity, $operation){
     try {
       /** @var \Drupal\sapi\ActionTypeInterface $action */
-      $action = $this->sapiActionTypeManager->createInstance('entity_interaction', ['account'=> $this->currentUser,'entity'=> $entity,'action'=> $operation,'mode'=> '']);
+      $action = $this->sapiActionTypeManager->createInstance('entity_interaction', ['context'=> ['entity'=> $entity,'action'=> $operation,'mode'=> '', 'account'=> $this->currentUser->getAccount()]]);
       if (!($action instanceof ActionTypeInterface)) {
         throw new \Exception('No entity_interaction plugin was found');
       }

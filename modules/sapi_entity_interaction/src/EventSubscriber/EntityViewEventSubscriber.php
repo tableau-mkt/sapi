@@ -2,15 +2,11 @@
 
 namespace Drupal\sapi_entity_interaction\EventSubscriber;
 
-use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\sapi_entity_interaction\EntityInteractionCollector;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
-use Drupal\Core\Session\AccountProxy;
-use Drupal\sapi\Dispatcher;
 use Drupal\Core\Routing\CurrentRouteMatch;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Drupal\sapi\ActionTypeInterface;
-use Drupal\Core\Entity;
 
 /**
  * Class EntityViewEventSubscriber.
@@ -20,26 +16,9 @@ use Drupal\Core\Entity;
 class EntityViewEventSubscriber implements EventSubscriberInterface {
 
   /**
-   * Drupal\Core\Session\AccountProxy definition.
-   *
-   * @var \Drupal\Core\Session\AccountProxy
+   * @constant for what entity interaction "action" is used for view
    */
-  protected $currentUser;
-
-  /**
-   * Drupal\sapi\Dispatcher definition.
-   *
-   * @var \Drupal\sapi\Dispatcher
-   */
-  protected $sapiDispatcher;
-
-  /**
-   * The statistics action type plugin manager which will be used to create sapi
-   * items to be passed to the dispatcher
-   *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface $sapiActionTypeManager
-   */
-  protected $sapiActionTypeManager;
+  const ACTION_VIEW="view";
 
   /**
    * Drupal\Core\Routing\CurrentRouteMatch definition.
@@ -49,13 +28,18 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
   protected $currentRouteMatch;
 
   /**
+   * Drupal\sapi_entity_interaction\
+   *
+   * @var \Drupal\sapi_entity_interaction\EntityInteractionCollector
+   */
+  protected $entityInteractionCollector;
+
+  /**
    * Constructor.
    */
-  public function __construct(AccountProxy $currentUser, Dispatcher $sapiDispatcher, PluginManagerInterface $sapiActionTypeManager, CurrentRouteMatch $currentRouteMatch) {
-    $this->currentUser = $currentUser;
-    $this->sapiDispatcher = $sapiDispatcher;
-    $this->sapiActionTypeManager = $sapiActionTypeManager;
+  public function __construct(CurrentRouteMatch $currentRouteMatch, EntityInteractionCollector $entityInteractionCollector) {
     $this->currentRouteMatch = $currentRouteMatch;
+    $this->entityInteractionCollector = $entityInteractionCollector;
   }
 
   /**
@@ -70,8 +54,8 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Informs Statistics API dispatcher when controller outputs a value which is
-   * not a Response instance.
+   * Pass any entity view routes to the entity interaction collector for
+   * dispatching.
    *
    * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
    */
@@ -80,14 +64,9 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
       if (preg_match('/entity\.([\w]+)\.canonical/',$this->currentRouteMatch->getRouteName(), $matches)) {
         /** @var \Drupal\Core\Entity\EntityInterface $entity */
         $entity = $this->currentRouteMatch->getParameter($matches[1]);
-        /** @var string $mode String containing Display mode. */
-        $mode = $event->getControllerResult()['#view_mode'];
-        /** @var \Drupal\sapi\ActionTypeInterface $action */
-        $action = $this->sapiActionTypeManager->createInstance('entity_interaction', ['account'=> $this->currentUser,'entity'=> $entity,'action'=> 'View','mode'=> $mode]);
-        if (!($action instanceof ActionTypeInterface)) {
-          throw new \Exception('No entity_interaction plugin was found');
-        }
-        $this->sapiDispatcher->dispatch($action);
+
+        // pass the interaction to the collector
+        $this->entityInteractionCollector->actionTypeTrigger($entity, self::ACTION_VIEW);
       }
     } catch (\Exception $e) {
       watchdog_exception('sapi_entity_interaction', $e);
