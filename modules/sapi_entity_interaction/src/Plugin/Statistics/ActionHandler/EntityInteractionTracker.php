@@ -2,14 +2,17 @@
 
 namespace Drupal\sapi_entity_interaction\Plugin\Statistics\ActionHandler;
 
-use Drupal\sapi\ActionHandlerInterface;
-use Drupal\sapi\ActionHandlerBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\sapi\ConfigurableActionHandlerBase;
 use Drupal\sapi\ActionTypeInterface;
 use Drupal\sapi\Plugin\Statistics\ActionType\EntityInteraction;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\Role;
+
 
 /**
  * This is a SAPI handler plugin used to track any entity interactions (view, update and create).
@@ -19,7 +22,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
  *  label = "Track any entity interactions"
  * )
  */
-class EntityInteractionTracker extends ActionHandlerBase implements ActionHandlerInterface, ContainerFactoryPluginInterface{
+class EntityInteractionTracker extends ConfigurableActionHandlerBase implements ContainerFactoryPluginInterface {
 
   /**
    * EntityTypeManager used to get entity storage for sapi_data items, which is
@@ -35,10 +38,11 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
    * @param array $configuration
    * @param string $plugin_id
    * @param mixed $plugin_definition
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entityTypeManager) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory, EntityTypeManagerInterface $entityTypeManager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $config_factory);
 
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -52,6 +56,7 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       $plugin_id,
       $plugin_definition,
 
+      $container->get('config.factory'),
       $container->get('entity_type.manager')
     );
   }
@@ -64,7 +69,8 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
     /**
      * Only acts if $action is an EntityInteraction plugin type
      */
-    if (!($action instanceof EntityInteraction)) {
+    if (!($action instanceof EntityInteraction) ||
+      empty(array_intersect($action->getAccount()->getRoles(), $this->configuration['roles']))) {
       return;
     }
 
@@ -112,6 +118,36 @@ class EntityInteractionTracker extends ActionHandlerBase implements ActionHandle
       \Drupal::logger('sapi')->warning('Could not create SAPI data');
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return array(
+      'roles' => ['authenticated']
+    );
+  }
+
+  /**
+   *{@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    /** @var array $all_roles Array of all available roles */
+    $all_roles = [];
+    foreach (Role::loadMultiple() as $role) {
+      /** @var \Drupal\user\Entity\Role $role */
+      $all_roles[$role->id()] = $role->label();
+    }
+    $form['roles'] = array(
+      '#type' => 'checkboxes',
+      '#title' => 'Tracked roles',
+      '#description' => 'User roles to track.',
+      '#options' => $all_roles,
+      '#default_value' => $this->configuration['roles']
+    );
+
+    return $form;
   }
 
 }
