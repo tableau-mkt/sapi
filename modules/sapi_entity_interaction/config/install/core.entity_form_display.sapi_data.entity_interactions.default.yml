@@ -4,14 +4,13 @@ dependencies:
   enforced:
     module:
       - sapi_entity_interaction
+      - dynamic_entity_reference
+      - sapi_entity_interaction
   config:
     - field.field.sapi_data.entity_interactions.field_entity_reference
     - field.field.sapi_data.entity_interactions.field_interaction_type
-    - field.field.sapi_data.entity_interactions.field_user
+    - field.field.sapi_data.entity_interactions.field_entity_user
     - sapi_data.sapi_data_type.entity_interactions
-  module:
-    - dynamic_entity_reference
-    - sapi_entity_interaction
 id: sapi_data.entity_interactions.default
 targetEntityType: sapi_data
 bundle: entity_interactions
@@ -32,7 +31,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-  field_user:
+  field_entity_user:
     weight: 12
     settings:
       match_operator: CONTAINS

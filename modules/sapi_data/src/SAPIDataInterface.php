@@ -12,7 +12,7 @@ use Drupal\user\EntityOwnerInterface;
  * @ingroup sapi_data
  */
 interface SAPIDataInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
-  // Add get/set methods for your configuration properties here.
+
   /**
    * Gets the Statistics API Data entry type.
    *
@@ -73,7 +73,7 @@ interface SAPIDataInterface extends ContentEntityInterface, EntityChangedInterfa
    * Sets the published status of a Statistics API Data entry.
    *
    * @param bool $published
-   *   TRUE to set this Statistics API Data entry to published, FALSE to set it to unpublished.
+   *   TRUE to set SAPI Data entry to published, FALSE to set it to unpublished.
    *
    * @return \Drupal\sapi_data\SAPIDataInterface
    *   The called Statistics API Data entry entity.

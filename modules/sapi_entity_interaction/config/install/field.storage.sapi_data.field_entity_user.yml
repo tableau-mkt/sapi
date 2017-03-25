@@ -1,14 +1,13 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - sapi_data
-    - user
   enforced:
     module:
+      - sapi_entity_interaction
       - sapi_data
-id: sapi_data.field_user
-field_name: field_user
+      - user
+id: sapi_data.field_entity_user
+field_name: field_entity_user
 entity_type: sapi_data
 type: entity_reference
 settings:

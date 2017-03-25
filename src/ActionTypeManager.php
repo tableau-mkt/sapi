@@ -8,15 +8,13 @@ use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\sapi\Exception\MissingPluginConfiguration;
-use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Provides the Statistics action type plugin manager.
  */
 class ActionTypeManager extends DefaultPluginManager implements ContextAwarePluginManagerInterface {
 
-  // Use the CAPM trait to satisfy the ContextAware plugin manager interface
+  // Use the CAPM trait to satisfy the ContextAware plugin manager interface.
   use ContextAwarePluginManagerTrait;
 
   /**
@@ -37,8 +35,21 @@ class ActionTypeManager extends DefaultPluginManager implements ContextAwarePlug
     $this->setCacheBackend($cache_backend, 'sapi_sapi_action_type_plugins');
   }
 
-  public function createInstance($plugin_id, array $configuration = array()) {
-    /**
+  /**
+   * Creates a pre-configured instance of a plugin.
+   *
+   * @param string $plugin_id
+   *   ID of plugin.
+   * @param array $configuration
+   *   Configurations for creating instance.
+   *
+   * @return \Drupal\sapi\ActionTypeInterface
+   *   Returns plugin that implements ActionTypeInterface.
+   *
+   * @throws \Drupal\sapi\Exception\MissingPluginConfiguration
+   */
+  public function createInstance($plugin_id, array $configuration = []) {
+    /*
      * @see https://www.drupal.org/node/2753585
      *
      * Drupal 8.x has a bug which prevents setting of contexts during
@@ -52,34 +63,31 @@ class ActionTypeManager extends DefaultPluginManager implements ContextAwarePlug
     unset($configuration['context']);
 
     /** @var ActionTypeInterface $instance */
-    $instance =  parent::createInstance($plugin_id, $configuration);
+    $instance = parent::createInstance($plugin_id, $configuration);
 
-    // set any contexts
-    foreach ($contexts as $key=>$value) {
+    // Set any contexts.
+    foreach ($contexts as $key => $value) {
       $instance->setContextValue($key, $value);
     }
 
-    // Check any context constraints
-
-    /** @var ConstraintViolationListInterface $violations */
+    // Check any context constraints.
+    /** @var \Symfony\Component\Validator\ConstraintViolationListInterface $violations */
     $violations = $instance->validateContexts();
-    if ($violations->count()>0) {
-      /** @var []string $messages Error messages from constraint violations*/
+    /** @var string[] $messages */
+    if ($violations->count() > 0) {
       $messages = [];
 
-      foreach($violations as $violation) {
-        /** @var ConstraintViolationInterface $violation */
-
-        /** @todo these messages are actually pretty weak */
+      foreach ($violations as $violation) {
+        // @todo these messages are actually pretty weak.
+        /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
         $messages[] .= $violation->getMessage();
       }
 
       drupal_set_message('FAILED TO CREATE ACTION');
-      throw new MissingPluginConfiguration('ActionType context constraint violation (check your plugin contexts): '.implode(".\n ", $messages));
+      throw new MissingPluginConfiguration('ActionType context constraint violation (check your plugin contexts): ' . implode(".\n ", $messages));
     }
 
     return $instance;
   }
-
 
 }

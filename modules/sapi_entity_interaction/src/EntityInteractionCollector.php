@@ -7,7 +7,6 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\sapi\ActionTypeInterface;
 use Drupal\sapi\Dispatcher;
 use Drupal\sapi\ActionTypeManager;
-use Drupal\Core\Entity;
 
 /**
  * Class EntityInteractionCollector.
@@ -47,20 +46,34 @@ class EntityInteractionCollector {
   }
 
   /**
-   * Initiates Drupal\sapi\ActionType plugin and hands it to dispatcher
+   * Initiates Drupal\sapi\ActionType plugin and hands it to dispatcher.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
-   * @param string $operation Type of operation made on entity.
+   *   Current actions entity.
+   * @param string $operation
+   *   Type of operation made on entity.
    */
-  function actionTypeTrigger(EntityInterface $entity, $operation){
+  public function actionTypeTrigger(EntityInterface $entity, $operation) {
+    $allowed_entities = ['node', 'user', 'comments', 'taxonomy_term'];
+    if (!in_array($entity->getEntityTypeId(), $allowed_entities)) {
+      return;
+    }
     try {
       /** @var \Drupal\sapi\ActionTypeInterface $action */
-      $action = $this->sapiActionTypeManager->createInstance('entity_interaction', ['context'=> ['entity'=> $entity,'action'=> $operation,'mode'=> '', 'account'=> $this->currentUser->getAccount()]]);
+      $action = $this->sapiActionTypeManager
+        ->createInstance('entity_interaction', [
+          'context' => [
+            'entity' => $entity,
+            'action' => $operation,
+            'account' => $this->currentUser->getAccount(),
+          ],
+        ]);
       if (!($action instanceof ActionTypeInterface)) {
         throw new \Exception('No entity_interaction plugin was found');
       }
       $this->sapiDispatcher->dispatch($action);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       watchdog_exception('sapi_entity_interaction', $e);
     }
   }

@@ -12,8 +12,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\sapi\Exception\MissingConfigurationObject;
 
 /**
- * Base class for Statistics action handler plugins that implements
- * PluginFormInterface and provides configuration form.
+ * Base class for action handler that has configuration form.
+ *
  * Configuration file should use sapi.plugin.{plugin_id} namespace in order for
  * formSubmit to save to it automatically. Otherwise editableConfiguration
  * must be provided in plugin construct.
@@ -30,9 +30,9 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
   protected $configFactory;
 
   /**
-   * Configuration name for this plugin
+   * Configuration name for this plugin.
    *
-   * @var array $editableConfiguration
+   * @var array
    */
   protected $editableConfiguration;
 
@@ -40,13 +40,17 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    * Constructs a \Drupal\sapi\ConfigurableActionHandlerBase object.
    *
    * @param array $configuration
+   *   Configurations for plugin.
    * @param string $plugin_id
+   *   ID of plugin.
    * @param array $plugin_definition
+   *   Definition for plugin.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Configuration factory to get plugin configurations.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config_factory ) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;
-    $this->editableConfiguration = 'sapi.plugin.'.$plugin_id;
+    $this->editableConfiguration = 'sapi.plugin.' . $plugin_id;
     parent:: __construct($configuration + $this->getConfiguration(), $plugin_id, $plugin_definition);
   }
 
@@ -65,39 +69,41 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
   }
 
   /**
-   *{@inheritdoc}
+   * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {}
 
   /**
-   *{@inheritdoc}
+   * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     $form_base_keys = array_fill_keys(
-      array(
+      [
         'submit',
         'cancel',
         'form_build_id',
         'form_token',
         'form_id',
-        'op'),
+        'op',
+      ],
       '');
     $form_configurations = array_diff_key($form_state->getValues(), $form_base_keys);
     foreach ($form_configurations as $key => $value) {
-      /** Store in configuration only values that have been set in form */
+      // Store in configuration only values that have been set in form.
       $this->configuration[$key] = is_array($form_state->getValue($key))
         ? array_filter($form_state->getValue($key))
         : $form_state->getValue($key);
     }
-    if($this->setConfiguration($this->configuration)) {
-      drupal_set_message('Plugin: '.$this->getPluginId().' configurations has been saved successfully.');
-    } else {
+    if ($this->setConfiguration($this->configuration)) {
+      drupal_set_message('Plugin: ' . $this->getPluginId() . ' configurations has been saved successfully.');
+    }
+    else {
       throw new MissingConfigurationObject('Error saving configurations for plugin: ' . $this->getPluginId());
     }
   }
 
   /**
-   *{@inheritdoc}
+   * {@inheritdoc}
    */
   public function setConfiguration(array $configuration) {
     foreach ($configuration as $key => $value) {
@@ -109,24 +115,25 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
   /**
    * Provides dynamic page title.
    *
-   * @return string Returns a page title.
+   * @return string
+   *   Returns a page title.
    */
   public function getTitle() {
-    return $this->t('Configure').' '.$this->getPluginId();
+    return $this->t('Configure') . ' ' . $this->getPluginId();
   }
 
   /**
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array();
+    return [];
   }
 
   /**
@@ -134,7 +141,7 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    */
   public function resetFormToDefaults() {
     $this->setConfiguration($this->defaultConfiguration());
-    drupal_set_message('Plugin: '.$this->getPluginId().' has been reset to default values.');
+    drupal_set_message('Plugin: ' . $this->getPluginId() . ' has been reset to default values.');
   }
-  
+
 }
