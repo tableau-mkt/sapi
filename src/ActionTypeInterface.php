@@ -11,9 +11,10 @@ use Drupal\Core\Plugin\ContextAwarePluginInterface;
 interface ActionTypeInterface extends PluginInspectionInterface, ContextAwarePluginInterface {
 
   /**
-   * Describe yourself in one line, typically used for logging
+   * Describe yourself in one line, typically used for logging.
    *
-   * @return string 1-line description of what this plugin contains.
+   * @return string
+   *   1-line description of what this plugin contains.
    */
   public function describe();
 

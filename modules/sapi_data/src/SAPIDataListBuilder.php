@@ -14,6 +14,7 @@ use Drupal\Core\Url;
  */
 class SAPIDataListBuilder extends EntityListBuilder {
   use LinkGeneratorTrait;
+
   /**
    * {@inheritdoc}
    */
@@ -34,9 +35,9 @@ class SAPIDataListBuilder extends EntityListBuilder {
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.sapi_data.canonical', array(
+        'entity.sapi_data.canonical', [
           'sapi_data' => $entity->id(),
-        )
+        ]
       )
     );
     return $row + parent::buildRow($entity);

@@ -33,15 +33,15 @@ Here you can manage the actual entry entities themselves
 <?php
 
 /**
- * If we have a SAPI data bundle/type called MySAPIDataType
- * that has a field added called MyDataField, then we can
- * create and save an entity like this
+ * @file
+ * ExampleSapiActionHandler.php.
  */
 
 $value = "new value";
 
-/** var \Drupal\sapi_data\SAPIDataInterface $entry */
-$entry = \Drupal::service('entity_type.manager')->getStorage('sapi_data')->create(['type'=>'MySAPIDataType']);
+/**
+ * Var \Drupal\sapi_data\SAPIDataInterface $entry .*/
+$entry = \Drupal::service('entity_type.manager')->getStorage('sapi_data')->create(['type' => 'MySAPIDataType']);
 
 $entry->MyDataField = $value;
 

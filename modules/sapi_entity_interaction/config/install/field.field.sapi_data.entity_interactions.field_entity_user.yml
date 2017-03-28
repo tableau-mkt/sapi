@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.sapi_data.field_user
+    - field.storage.sapi_data.field_entity_user
     - sapi_data.sapi_data_type.entity_interactions
-id: sapi_data.entity_interactions.field_user
-field_name: field_user
+id: sapi_data.entity_interactions.field_entity_user
+field_name: field_entity_user
 entity_type: sapi_data
 bundle: entity_interactions
 label: User

@@ -42,10 +42,10 @@ function sapi_data_theme() {
 }
 
 /**
-* Implements hook_theme_suggestions_HOOK().
-*/
+ * Implements hook_theme_suggestions_HOOK().
+ */
 function sapi_data_theme_suggestions_sapi_data(array $variables) {
-  $suggestions = array();
+  $suggestions = [];
   $entity = $variables['elements']['#sapi_data'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
 

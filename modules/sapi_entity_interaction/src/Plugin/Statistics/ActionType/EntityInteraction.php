@@ -1,22 +1,21 @@
 <?php
+
 namespace Drupal\sapi_entity_interaction\Plugin\Statistics\ActionType;
 
-use Drupal\Core\Annotation\ContextDefinition;
-use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\sapi\ActionTypeBase;
-use Drupal\sapi\Annotation\ActionType;
 
 /**
+ * EntityInteraction action type that defines actions on any entity.
+ *
  * @ActionType(
  *  id = "entity_interaction",
  *  label = "An interaction with an entity occurred",
  *  context = {
  *     "action" = @ContextDefinition("string", label = @Translation("Tags")),
- *     "mode" = @ContextDefinition("string", label = @Translation("Mode"), required = FALSE),
  *     "entity" = @ContextDefinition("entity", label = @Translation("Entity") ),
- *     "account" = @ContextDefinition("any", label = @Translation("Entity") ),
+ *     "account" = @ContextDefinition("any", label = @Translation("Entity") )
  *  }
  * )
  *
@@ -41,32 +40,36 @@ class EntityInteraction extends ActionTypeBase {
    * {@inheritdoc}
    */
   public function describe() {
-    return 'Entity event: [entity:'.(($this->getEntity() instanceof EntityInterface)?$this->getEntity()->label().'('.$this->getEntity()->id().')':'none').'][account:'.(($this->getAccount() instanceof AccountProxyInterface)?$this->getAccount()->getDisplayName().'('.$this->getAccount()->id().')':'none').'][action:'.$this->getAction().']';
+    return 'Entity event: [entity:' . (($this->getEntity() instanceof EntityInterface) ? $this->getEntity()->label() . '(' . $this->getEntity()->id() . ')' : 'none') . '][account:' . (($this->getAccount() instanceof AccountProxyInterface) ? $this->getAccount()->getDisplayName() . '(' . $this->getAccount()->id() . ')' : 'none') . '][action:' . $this->getAction() . ']';
   }
 
   /**
-   * Get the action performed on the entity
+   * Get the action performed on the entity.
    *
-   * @return string action
+   * @return string
+   *   Action type of action.
    */
-  function getAction() {
+  public function getAction() {
     return $this->getContextValue('action');
   }
+
   /**
-   * Get the entity acted on
+   * Get the entity acted on.
    *
    * @return \Drupal\Core\Entity\EntityInterface
+   *   Entity of action.
    */
-  function getEntity() {
+  public function getEntity() {
     return $this->getContextValue('entity');
   }
 
   /**
-   * Get the account who performed the action
+   * Get the account who performed the action.
    *
    * @return \Drupal\Core\Session\AccountProxyInterface|null
+   *   Account that acted in action.
    */
-  function getAccount() {
+  public function getAccount() {
     return $this->getContextValue('account');
   }
 

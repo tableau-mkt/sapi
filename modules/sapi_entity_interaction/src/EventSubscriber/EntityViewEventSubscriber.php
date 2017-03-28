@@ -4,8 +4,8 @@ namespace Drupal\sapi_entity_interaction\EventSubscriber;
 
 use Drupal\sapi_entity_interaction\EntityInteractionCollector;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Drupal\Core\Routing\CurrentRouteMatch;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -16,9 +16,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class EntityViewEventSubscriber implements EventSubscriberInterface {
 
   /**
+   * Defines type of action that can be used.
+   *
    * @constant for what entity interaction "action" is used for view
    */
-  const ACTION_VIEW="view";
+  const ACTION_VIEW = "view";
 
   /**
    * Drupal\Core\Routing\CurrentRouteMatch definition.
@@ -28,7 +30,7 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
   protected $currentRouteMatch;
 
   /**
-   * Drupal\sapi_entity_interaction\
+   * Drupal\sapi_entity_interaction\.
    *
    * @var \Drupal\sapi_entity_interaction\EntityInteractionCollector
    */
@@ -45,7 +47,7 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  static function getSubscribedEvents() {
+  public static function getSubscribedEvents() {
     // Priority is set to 1 to avoid this listener from being stopped by other
     // listeners.
     // @see ContainerAwareEventDispatcher::dispatch()
@@ -54,21 +56,22 @@ class EntityViewEventSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Pass any entity view routes to the entity interaction collector for
-   * dispatching.
+   * Triggering method for entity view routes.
    *
    * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+   *   Event that called action.
    */
-  public function onEventView(Event $event) {
+  public function onEventView(GetResponseForControllerResultEvent $event) {
     try {
-      if (preg_match('/entity\.([\w]+)\.canonical/',$this->currentRouteMatch->getRouteName(), $matches)) {
+      if (preg_match('/entity\.([\w]+)\.canonical/', $this->currentRouteMatch->getRouteName(), $matches)) {
         /** @var \Drupal\Core\Entity\EntityInterface $entity */
         $entity = $this->currentRouteMatch->getParameter($matches[1]);
 
-        // pass the interaction to the collector
+        // Pass the interaction to the collector.
         $this->entityInteractionCollector->actionTypeTrigger($entity, self::ACTION_VIEW);
       }
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       watchdog_exception('sapi_entity_interaction', $e);
     }
   }

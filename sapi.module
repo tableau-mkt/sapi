@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains sapi.module..
+ * Contains sapi.module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;

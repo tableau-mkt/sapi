@@ -3,7 +3,9 @@
 namespace Drupal\sapi\Exception;
 
 /**
- * An exception for when a plugin did not receive expected parameters during
+ * Configuration exception for plugin.
+ *
+ * Should be thrown when a plugin did not receive expected parameters during
  * construction, in the configuration array.
  */
 class MissingPluginConfiguration extends \Exception {

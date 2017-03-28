@@ -16,7 +16,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('sapi');
+  public static $modules = ['sapi'];
 
   /**
    * A user with the 'sapi capture js actions' permission.
@@ -28,7 +28,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
   /**
    * Path to JS action capturer.
    *
-   * @var string $path
+   * @var string
    */
   protected $path = 'sapi/js/capture';
 
@@ -37,7 +37,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function setUp() {
     parent::setUp();
-    $this->webUser = $this->drupalCreateUser(array('sapi capture js actions'));
+    $this->webUser = $this->drupalCreateUser(['sapi capture js actions']);
   }
 
   /**
@@ -45,7 +45,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testCaptureWithInvalidParams() {
     $this->drupalLogin($this->webUser);
-    $this->drupalPost($this->path, '', array());
+    $this->drupalPost($this->path, '', []);
     $this->assertResponse(400);
   }
 
@@ -54,7 +54,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testCaptureWithMissingParams() {
     $this->drupalLogin($this->webUser);
-    $this->drupalPost($this->path, '', array('action' => 'click'));
+    $this->drupalPost($this->path, '', ['action' => 'click']);
     $this->assertResponse(400);
   }
 
@@ -63,7 +63,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testValidCapture() {
     $this->drupalLogin($this->webUser);
-    $this->drupalPost($this->path, '', array('action' => 'click', 'uri' => 'http://www.example.com'));
+    $this->drupalPost($this->path, '', ['action' => 'click', 'uri' => 'http://www.example.com']);
     $this->assertResponse(200);
   }
 
@@ -72,7 +72,6 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testUnreachableSapiService() {
     // @todo Invoke controller class directly and try to fail the service call.
-    // $this->assertResponse(500, 'Response is 500 if SAPI service is not reachable.');
   }
 
   /**
@@ -80,7 +79,7 @@ class JsActionCaptureControllerTest extends WebTestBase {
    */
   public function testCaptureWithNonAuthorizedUser() {
     $this->drupalLogin($this->drupalCreateUser());
-    $this->drupalPost('sapi/js/capture', '', array('action' => 'click', 'uri' => 'http://www.example.com'));
+    $this->drupalPost('sapi/js/capture', '', ['action' => 'click', 'uri' => 'http://www.example.com']);
     $this->assertResponse(403);
   }
 

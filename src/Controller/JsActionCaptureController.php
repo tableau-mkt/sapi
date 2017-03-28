@@ -21,28 +21,30 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class JsActionCaptureController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
-   * @var \Symfony\Component\HttpFoundation\RequestStack $requestStack
-   *   Used to retrieve POST variables to create Action data
+   * Used to retrieve POST variables to create Action data.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
   protected $requestStack;
+
   /**
-   * @var \Drupal\sapi\DispatcherInterface $sapiDispatcher
-   *  use to receive action items
+   * Use to receive action items.
+   *
+   * @var \Drupal\sapi\DispatcherInterface
    */
   protected $sapiDispatcher;
 
   /**
-   * The statistics action type plugin manager which will be used to create sapi
-   * items to be passed to the dispatcher
+   * Action type plugin manager used to create sapi items for dispatcher.
    *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_type_manager
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
    */
-  protected $sapi_action_type_manager;
+  protected $sapiActionTypeManager;
 
   /**
-   * Symfony Container which we may use to convert arguments to services
+   * Symfony Container which we may use to convert arguments to services.
    *
-   * @var \Symfony\Component\DependencyInjection\ContainerInterface $container
+   * @var \Symfony\Component\DependencyInjection\ContainerInterface
    */
   protected $container;
 
@@ -50,14 +52,21 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
    * JsActionCaptureController constructor.
    *
    * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   *   Current request.
    * @param \Drupal\sapi\DispatcherInterface $sapiDispatcher
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_type_manager
+   *   Dispatcher for dispatching actions.
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapiActionTypeManager
+   *   Plugin manager to create action instances.
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   Dependency injection container.
    */
-  public function __construct(RequestStack $requestStack, DispatcherInterface $sapiDispatcher, PluginManagerInterface $sapi_action_type_manager, ContainerInterface $container) {
+  public function __construct(RequestStack $requestStack,
+                              DispatcherInterface $sapiDispatcher,
+                              PluginManagerInterface $sapiActionTypeManager,
+                              ContainerInterface $container) {
     $this->requestStack = $requestStack;
     $this->sapiDispatcher = $sapiDispatcher;
-    $this->sapi_action_type_manager = $sapi_action_type_manager;
+    $this->sapiActionTypeManager = $sapiActionTypeManager;
     $this->container = $container;
   }
 
@@ -77,11 +86,15 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
    * Captures JS action and informs the SAPI service.
    *
    * @param string $action_type
+   *   Action type identifier.
    *
-   * @return string http response
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   Returns response if everything went ok.
    *
-   * @throws BadRequestHttpException if an unknown handler is used
-   * @throws HttpException if a handler throws an exception
+   * @throws BadRequestHttpException
+   *   If an unknown handler is used.
+   * @throws HttpException
+   *   If a handler throws an exception.
    */
   public function action($action_type) {
 
@@ -92,25 +105,21 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
     // Get current request.
     $request = $this->requestStack->getCurrentRequest();
 
-    /**
-     * @var [] $configuration
-     *  unknown array of values which should make sense to the action type plugin
-     */
+    // Unknown array of values that should make sense to the action type plugin.
+    /** @var [] $configuration */
     $configuration = $request->get('action');
 
-    /**
-     * Convert any values to services if the value is a string, and it is marked
-     * with an @ to denote a service.
-     */
-    foreach($configuration as $key=>&$value) {
-      if (is_string($value) && strlen($value)>1 && substr($value,0,1)=='@') {
-        $configuration[$key] = $this->container->get(substr($value,1), ContainerInterface::NULL_ON_INVALID_REFERENCE);
+    // Convert any values to services if the value is a string, and it is marked
+    // with an @ to denote a service.
+    foreach ($configuration as $key => &$value) {
+      if (is_string($value) && strlen($value) > 1 && substr($value, 0, 1) == '@') {
+        $configuration[$key] = $this->container->get(substr($value, 1), ContainerInterface::NULL_ON_INVALID_REFERENCE);
       }
     }
 
     // Create new statistics item.
     /** @var \Drupal\sapi\ActionTypeInterface $action */
-    $action = $this->sapi_action_type_manager->createInstance($action_type, $configuration);
+    $action = $this->sapiActionTypeManager->createInstance($action_type, $configuration);
 
     if (!($action instanceof ActionTypeInterface)) {
       throw new BadRequestHttpException('Action Parameter does not correspond to any know action type.');
@@ -122,7 +131,8 @@ class JsActionCaptureController extends ControllerBase implements ContainerInjec
       $this->sapiDispatcher->dispatch($action);
 
       return new Response('OK', 200);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       throw new HttpException(500, 'Internal Server Error', $e);
     }
 

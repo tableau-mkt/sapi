@@ -10,5 +10,4 @@ use Drupal\Component\Plugin\PluginBase;
 abstract class ActionHandlerBase extends PluginBase implements ActionHandlerInterface {
 
   // Add common methods and abstract methods for your plugin type here.
-
 }

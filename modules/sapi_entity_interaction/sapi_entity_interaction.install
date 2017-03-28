@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Contains sapi_entity_interaction.install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function sapi_entity_interaction_uninstall() {
+  $configs = [
+    'field.field.sapi_data.entity_interactions.field_entity_reference',
+    'field.field.sapi_data.entity_interactions.field_interaction_type',
+    'field.field.sapi_data.entity_interactions.field_entity_user',
+    'sapi.plugin.entity_interaction_config',
+    'sapi.plugin.entity_interaction_tracker',
+    'block.block.views_block__most_viewed_articles_most_viewed_articles_block',
+    'block.block.views_block__entity_interactions_top_content_contributors_block',
+    'views.view.most_viewed_articles',
+    'views.view.entity_interactions',
+    'views.view.user_contributions',
+  ];
+  foreach ($configs as $config) {
+    Drupal::configFactory()->getEditable($config)->delete();
+  }
+}

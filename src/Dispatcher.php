@@ -16,15 +16,16 @@ class Dispatcher implements DispatcherInterface {
    *
    * @var \Drupal\Component\Plugin\PluginManagerInterface
    */
-  protected $SAPIActionHandlerPluginManager;
+  protected $sapiActionHandlerPluginManager;
 
   /**
    * Dispatcher constructor.
    *
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $SAPIActionHandlerPluginManager
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapiActionHandlerPluginManager
+   *   Plugin manager for Action handler plugins.
    */
-  public function __construct(PluginManagerInterface $SAPIActionHandlerPluginManager) {
-    $this->SAPIActionHandlerPluginManager = $SAPIActionHandlerPluginManager;
+  public function __construct(PluginManagerInterface $sapiActionHandlerPluginManager) {
+    $this->sapiActionHandlerPluginManager = $sapiActionHandlerPluginManager;
   }
 
   /**
@@ -36,9 +37,10 @@ class Dispatcher implements DispatcherInterface {
     foreach ($enabled as $id) {
       try {
         /** @var \Drupal\sapi\ActionHandlerInterface $instance */
-        $instance = $this->SAPIActionHandlerPluginManager->createInstance($id);
+        $instance = $this->sapiActionHandlerPluginManager->createInstance($id);
         $instance->process($action);
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
         \Drupal::logger('default')
           ->error("Error during SAPI dispatch : " . $e->getMessage());
       }

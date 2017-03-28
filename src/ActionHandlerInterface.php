@@ -18,7 +18,7 @@ interface ActionHandlerInterface extends PluginInspectionInterface {
    * action.
    *
    * @param \Drupal\sapi\ActionTypeInterface $item
-   *
+   *   SAPI action item to be passed to the handler plugins.
    */
   public function process(ActionTypeInterface $item);
 

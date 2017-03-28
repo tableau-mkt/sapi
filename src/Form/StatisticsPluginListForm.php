@@ -19,28 +19,33 @@ class StatisticsPluginListForm extends ConfigFormBase {
   /**
    * The statistics action type plugin manager.
    *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_type_manager
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
    */
-  protected $sapi_action_type_manager;
+  protected $sapiActionTypeManager;
 
   /**
    * The statistics action handler plugin manager.
    *
-   * @var \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_handler_manager
+   * @var \Drupal\Component\Plugin\PluginManagerInterface
    */
-  protected $sapi_action_handler_manager;
+  protected $sapiActionHandlerManager;
 
   /**
    * Constructs a new StatisticsPluginListForm form.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_handler_manager
-   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapi_action_type_manager
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   *   Configuration factory required by ConfigFormBase.
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapiActionTypeManager
+   *   Action type manager to load plugin definitions.
+   * @param \Drupal\Component\Plugin\PluginManagerInterface $sapiActionHandlerManager
+   *   Action handler manager to load plugin definitions.
    */
-  public function __construct(ConfigFactoryInterface $config_factory,  PluginManagerInterface $sapi_action_type_manager, PluginManagerInterface $sapi_action_handler_manager) {
-    parent::__construct($config_factory);
-    $this->sapi_action_type_manager = $sapi_action_type_manager;
-    $this->sapi_action_handler_manager = $sapi_action_handler_manager;
+  public function __construct(ConfigFactoryInterface $configFactory,
+                              PluginManagerInterface $sapiActionTypeManager,
+                              PluginManagerInterface $sapiActionHandlerManager) {
+    parent::__construct($configFactory);
+    $this->sapiActionTypeManager = $sapiActionTypeManager;
+    $this->sapiActionHandlerManager = $sapiActionHandlerManager;
   }
 
   /**
@@ -87,7 +92,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#type' => 'table',
       '#header' => [
         'id' => $this->t('ID'),
-        'label' => $this->t('Label')
+        'label' => $this->t('Label'),
       ],
       '#empty' => $this->t('There are no plugins yet.'),
       '#tableselect' => TRUE,
@@ -95,14 +100,14 @@ class StatisticsPluginListForm extends ConfigFormBase {
     ];
 
     // Loop through the statistics plugins.
-    foreach ($this->sapi_action_type_manager->getDefinitions() as $pluginDefinition) {
+    foreach ($this->sapiActionTypeManager->getDefinitions() as $pluginDefinition) {
       $id = $pluginDefinition['id'];
 
       $label = $pluginDefinition['label'];
 
       $form['plugins']['action_types'][$id] = [
         'id' => ['#plain_text' => $id],
-        'label' => ['#plain_text' => $label]
+        'label' => ['#plain_text' => $label],
       ];
     }
 
@@ -111,7 +116,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#header' => [
         'id' => $this->t('ID'),
         'label' => $this->t('Label'),
-        'operations' => $this->t('Operations')
+        'operations' => $this->t('Operations'),
       ],
       '#empty' => $this->t('There are no plugins yet.'),
       '#tableselect' => TRUE,
@@ -119,14 +124,14 @@ class StatisticsPluginListForm extends ConfigFormBase {
     ];
 
     // Loop through the statistics plugins.
-    foreach ($this->sapi_action_handler_manager->getDefinitions() as $pluginDefinition) {
+    foreach ($this->sapiActionHandlerManager->getDefinitions() as $pluginDefinition) {
       $id = $pluginDefinition['id'];
 
       $label = $pluginDefinition['label'];
 
       $form['plugins']['action_handlers'][$id] = [
         'id' => ['#plain_text' => $id],
-        'label' => ['#plain_text' => $label]
+        'label' => ['#plain_text' => $label],
       ];
 
       $form['plugins']['action_handlers'][$id]['operations'] = [
@@ -136,7 +141,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       if (isset(class_implements($pluginDefinition['class'])['Drupal\Core\Plugin\PluginFormInterface'])) {
         $form['plugins']['action_handlers'][$id]['operations']['#links']['edit'] = [
           'title' => $this->t('Edit'),
-          'url' => new Url('sapi.plugin_configure_form', ['plugin' => $id])
+          'url' => new Url('sapi.plugin_configure_form', ['plugin' => $id]),
         ];
       }
 

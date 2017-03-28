@@ -3,16 +3,15 @@ status: true
 dependencies:
   config:
     - system.menu.admin
-    - user.role.administrator
   module:
     - node
     - sapi_data
     - user
     - sapi_entity_interaction
-id: hottest_users
-label: 'Hottest users'
+id: entity_interactions
+label: 'Entity interactions'
 module: views
-description: 'Users who have contributed the most'
+description: 'Entity interactions listings'
 tag: ''
 base_table: users_field_data
 base_field: uid
@@ -209,7 +208,7 @@ display:
           id: field_interaction_type_value
           table: sapi_data__field_interaction_type
           field: field_interaction_type_value
-          relationship: reverse__sapi_data__field_user
+          relationship: reverse__sapi_data__field_entity_user
           group_type: group
           admin_label: ''
           operator: '!='
@@ -261,13 +260,13 @@ display:
       footer: {  }
       empty: {  }
       relationships:
-        reverse__sapi_data__field_user:
-          id: reverse__sapi_data__field_user
+        reverse__sapi_data__field_entity_user:
+          id: reverse__sapi_data__field_entity_user
           table: users_field_data
-          field: reverse__sapi_data__field_user
+          field: reverse__sapi_data__field_entity_user
           relationship: none
           group_type: group
-          admin_label: field_user
+          admin_label: field_entity_user
           required: true
           entity_type: user
           plugin_id: entity_reverse
@@ -275,7 +274,7 @@ display:
           id: node__field_entity_reference
           table: sapi_data__field_entity_reference
           field: node__field_entity_reference
-          relationship: reverse__sapi_data__field_user
+          relationship: reverse__sapi_data__field_entity_user
           group_type: group
           admin_label: 'field_entity_reference: Content'
           required: true
@@ -327,10 +326,10 @@ display:
         - 'languages:language_interface'
         - url
       tags: {  }
-  biggest_contrib_users_block:
+  top_content_contributors_block:
     display_plugin: block
-    id: biggest_contrib_users_block
-    display_title: 'Hottest users'
+    id: top_content_contributors_block
+    display_title: 'Top content providers'
     position: 1
     display_options:
       display_extenders: {  }
@@ -348,20 +347,328 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
       tags: {  }
-  entity_user_view_count_list_page:
+  top_content_contributors_page:
     display_plugin: page
-    id: entity_user_view_count_list_page
-    display_title: 'Entity user view count list page'
+    id: top_content_contributors_page
+    display_title: 'Top content providers page'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      arguments: {  }
+      defaults:
+        arguments: false
+        style: false
+        row: false
+        fields: false
+        title: false
+        access: false
+        empty: false
+      path: admin/structure/sapi/entity_user_content_providers
+      menu:
+        type: normal
+        title: 'Content providers'
+        description: ''
+        expanded: false
+        parent: entity.user.collection
+        weight: 21
+        context: '0'
+        menu_name: admin
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            name: name
+            mail: mail
+            uid: uid
+          info:
+            name:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            mail:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            uid:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
+      row:
+        type: fields
+        options: {  }
+      fields:
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Username
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: true
+            path: 'user/{{ name }}/contributions'
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: false
+            ellipsis: false
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: user_name
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: 0
+          format_plural_string: "1\x03@count"
+          prefix: ''
+          suffix: ''
+          entity_type: user
+          entity_field: name
+          plugin_id: field
+        mail:
+          id: mail
+          table: users_field_data
+          field: mail
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Email
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: basic_string
+          settings: {  }
+          group_column: entity_id
+          group_columns:
+            value: value
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: user
+          entity_field: mail
+          plugin_id: field
+        uid:
+          id: uid
+          table: users_field_data
+          field: uid
+          relationship: none
+          group_type: count
+          admin_label: ''
+          label: 'Content edited'
+          exclude: false
+          alter:
+            alter_text: false
+            text: 'Created and/or updated {{ uid }} posts.'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ', '
+          format_plural: 0
+          format_plural_string: "1\x03@count"
+          prefix: ''
+          suffix: ''
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: null
+          group_columns: null
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          field_api_classes: false
+          entity_type: user
+          entity_field: uid
+          plugin_id: field
+      title: 'Content providers'
+      display_description: ''
+      access:
+        type: perm
+        options:
+          perm: 'view published sapi data entry entities'
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: 'No content provided yet. '
+            format: basic_html
+          plugin_id: text
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+        - user.permissions
+      tags: {  }
+  user_profile_views:
+    display_plugin: page
+    id: user_profile_views
+    display_title: 'User profile views'
     position: 2
     display_options:
       display_extenders: {  }
       menu:
         type: normal
-        title: 'Entity user view count list'
+        title: 'User profile views'
         description: ''
         expanded: false
-        parent: sapi_data.sapi_data_structure
-        weight: 2
+        parent: entity.user.collection
+        weight: 20
         context: '0'
         menu_name: admin
       path: admin/structure/sapi/entity_user_view_count_list
@@ -370,7 +677,7 @@ display:
           id: field_interaction_type_value
           table: sapi_data__field_interaction_type
           field: field_interaction_type_value
-          relationship: reverse__sapi_data__field_user
+          relationship: reverse__sapi_data__field_entity_user
           group_type: group
           admin_label: ''
           operator: '='
@@ -670,22 +977,21 @@ display:
         type: fields
         options: {  }
       relationships:
-        reverse__sapi_data__field_user:
-          id: reverse__sapi_data__field_user
+        reverse__sapi_data__field_entity_user:
+          id: reverse__sapi_data__field_entity_user
           table: users_field_data
-          field: reverse__sapi_data__field_user
+          field: reverse__sapi_data__field_entity_user
           relationship: none
           group_type: group
-          admin_label: field_user
+          admin_label: field_entity_user
           required: true
           entity_type: user
           plugin_id: entity_reverse
       display_description: ''
       access:
-        type: role
+        type: perm
         options:
-          role:
-            administrator: administrator
+          perm: 'view published sapi data entry entities'
       empty:
         area:
           id: area
@@ -707,314 +1013,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.roles
-      tags: {  }
-  page_1:
-    display_plugin: page
-    id: page_1
-    display_title: 'Admins content providers page'
-    position: 3
-    display_options:
-      display_extenders: {  }
-      arguments: {  }
-      defaults:
-        arguments: false
-        style: false
-        row: false
-        fields: false
-        title: false
-        access: false
-        empty: false
-      path: admin/structure/sapi/entity_user_content_providers
-      menu:
-        type: normal
-        title: 'Content providers'
-        description: ''
-        expanded: false
-        parent: sapi_data.sapi_data_structure
-        weight: 5
-        context: '0'
-        menu_name: admin
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            name: name
-            mail: mail
-            uid: uid
-          info:
-            name:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            mail:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            uid:
-              sortable: true
-              default_sort_order: desc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options: {  }
-      fields:
-        name:
-          id: name
-          table: users_field_data
-          field: name
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Username
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: true
-            path: 'user/{{ name }}/contributions'
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: false
-            ellipsis: false
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: user_name
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns:
-            value: value
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          set_precision: false
-          precision: 0
-          decimal: .
-          format_plural: 0
-          format_plural_string: "1\x03@count"
-          prefix: ''
-          suffix: ''
-          entity_type: user
-          entity_field: name
-          plugin_id: field
-        mail:
-          id: mail
-          table: users_field_data
-          field: mail
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Email
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: basic_string
-          settings: {  }
-          group_column: entity_id
-          group_columns:
-            value: value
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          entity_type: user
-          entity_field: mail
-          plugin_id: field
-        uid:
-          id: uid
-          table: users_field_data
-          field: uid
-          relationship: none
-          group_type: count
-          admin_label: ''
-          label: 'Content edited'
-          exclude: false
-          alter:
-            alter_text: false
-            text: 'Created and/or updated {{ uid }} posts.'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          set_precision: false
-          precision: 0
-          decimal: .
-          separator: ', '
-          format_plural: 0
-          format_plural_string: "1\x03@count"
-          prefix: ''
-          suffix: ''
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: true
-          group_column: null
-          group_columns: null
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          field_api_classes: false
-          entity_type: user
-          entity_field: uid
-          plugin_id: field
-      title: 'Content providers'
-      display_description: ''
-      access:
-        type: role
-        options:
-          role:
-            administrator: administrator
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: false
-          content:
-            value: 'No content provided yet. '
-            format: basic_html
-          plugin_id: text
-    cache_metadata:
-      max-age: 0
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url.query_args
-        - user.roles
+        - user.permissions
       tags: {  }

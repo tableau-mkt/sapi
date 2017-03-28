@@ -13,6 +13,7 @@ use Drupal\Core\Access\AccessResult;
  * @see \Drupal\sapi_data\Entity\SAPIData.
  */
 class SAPIDataAccessControlHandler extends EntityAccessControlHandler {
+
   /**
    * {@inheritdoc}
    */

@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
  * @package Drupal\sapi_data\Form
  */
 class SAPIDataTypeForm extends EntityForm {
+
   /**
    * {@inheritdoc}
    */
@@ -18,23 +19,23 @@ class SAPIDataTypeForm extends EntityForm {
     $form = parent::form($form, $form_state);
 
     $sapi_data_type = $this->entity;
-    $form['label'] = array(
+    $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
       '#default_value' => $sapi_data_type->label(),
       '#description' => $this->t("Label for the Statistics API Data entry type."),
       '#required' => TRUE,
-    );
+    ];
 
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
       '#default_value' => $sapi_data_type->id(),
-      '#machine_name' => array(
+      '#machine_name' => [
         'exists' => '\Drupal\sapi_data\Entity\SAPIDataType::load',
-      ),
+      ],
       '#disabled' => !$sapi_data_type->isNew(),
-    );
+    ];
 
     /* You will need additional form elements for your custom properties. */
 
