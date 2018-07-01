@@ -97,6 +97,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#empty' => $this->t('There are no plugins yet.'),
       '#tableselect' => TRUE,
       '#default_value' => $this->config('sapi.action_types')->get('enabled'),
+      '#caption' => $this->t('Action Types'),
     ];
 
     // Loop through the statistics plugins.
@@ -121,6 +122,7 @@ class StatisticsPluginListForm extends ConfigFormBase {
       '#empty' => $this->t('There are no plugins yet.'),
       '#tableselect' => TRUE,
       '#default_value' => $this->config('sapi.action_handlers')->get('enabled'),
+      '#caption' => $this->t('Action Handlers'),
     ];
 
     // Loop through the statistics plugins.
