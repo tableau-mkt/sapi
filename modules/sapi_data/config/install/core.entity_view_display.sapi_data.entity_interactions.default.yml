@@ -1,0 +1,52 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - dynamic_entity_reference
+      - user
+  config:
+    - field.field.sapi_data.entity_interactions.field_entity_reference
+    - field.field.sapi_data.entity_interactions.field_interaction_type
+    - field.field.sapi_data.entity_interactions.field_entity_user
+    - sapi_data.sapi_data_type.entity_interactions
+id: sapi_data.entity_interactions.default
+targetEntityType: sapi_data
+bundle: entity_interactions
+mode: default
+content:
+  field_entity_reference:
+    weight: 5
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: dynamic_entity_reference_label
+  field_interaction_type:
+    weight: 4
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  field_entity_user:
+    weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  name:
+    label: above
+    type: string
+    weight: -4
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  user_id:
+    label: hidden
+    type: author
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

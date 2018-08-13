@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+id: entity_interactions
+label: 'Entity interactions'

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains sapi_data.install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function sapi_data_uninstall() {
+  $configs = [
+    'field.field.sapi_data.entity_interactions.field_entity_reference',
+    'field.field.sapi_data.entity_interactions.field_interaction_type',
+    'field.field.sapi_data.entity_interactions.field_entity_user',
+    'sapi.plugin.sapi_data_handler',
+  ];
+  foreach ($configs as $config) {
+    Drupal::configFactory()->getEditable($config)->delete();
+  }
+}
