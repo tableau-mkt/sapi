@@ -119,7 +119,8 @@ abstract class ConfigurableActionHandlerBase extends PluginBase implements Actio
    *   Returns a page title.
    */
   public function getTitle() {
-    return $this->t('Configure') . ' ' . $this->getPluginId();
+    $plugin_defintion = $this->getPluginDefinition('label');
+    return $this->t('Configure') . ' ' . $plugin_defintion['label'];
   }
 
   /**

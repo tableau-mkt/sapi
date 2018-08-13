@@ -115,8 +115,8 @@ class StatisticsPluginListForm extends ConfigFormBase {
     $form['plugins']['action_handlers'] = [
       '#type' => 'table',
       '#header' => [
-        'id' => $this->t('ID'),
         'label' => $this->t('Label'),
+        'description' => $this->t('Description'),
         'operations' => $this->t('Operations'),
       ],
       '#empty' => $this->t('There are no plugins yet.'),
@@ -131,9 +131,11 @@ class StatisticsPluginListForm extends ConfigFormBase {
 
       $label = $pluginDefinition['label'];
 
+      $description = $pluginDefinition['description'];
+
       $form['plugins']['action_handlers'][$id] = [
-        'id' => ['#plain_text' => $id],
         'label' => ['#plain_text' => $label],
+        'description' => ['#plain_text' => $description],
       ];
 
       $form['plugins']['action_handlers'][$id]['operations'] = [

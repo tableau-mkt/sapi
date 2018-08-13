@@ -14,7 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ActionHandler (
  *  id = "action_logger",
- *  label = "Log any received actions"
+ *  label = "Action Logger",
+ *  description = "Log any received actions"
  * )
  *
  * Testing action handler, which only logs the ->describe() string of every
