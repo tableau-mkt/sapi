@@ -10,7 +10,8 @@ use Drupal\sapi\ActionTypeInterface;
  *
  * @ActionType (
  *   id = "dummy",
- *   label = "Dummy action item"
+ *   label = "Dummy action item",
+ *   description = "Dummy action item for testing",
  * )
  *
  * A zero-requirements action plugin that can be used to test if actions are

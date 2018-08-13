@@ -11,6 +11,7 @@ use Drupal\sapi\ActionTypeInterface;
  * @ActionType (
  *   id = "tagged",
  *   label = "Tagged action item",
+ *   description = "Tagged action item",
  *   context = {
  *     "tag" = @ContextDefinition("string", label = @Translation("Tags"), multiple = true)
  *   }
