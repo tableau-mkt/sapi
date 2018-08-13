@@ -137,6 +137,8 @@ class PluginConfigureForm extends FormBase {
     else {
       $this->instance->submitConfigurationForm($form, $form_state);
     }
+
+    $form_state->setRedirect('sapi.statistics_plugin_list_form');
   }
 
   /**
