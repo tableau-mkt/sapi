@@ -30,4 +30,13 @@ class ActionType extends Plugin {
    */
   public $label;
 
+  /**
+   * The description of the plugin.
+   *
+   * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
+   */
+  public $description;
+
 }
