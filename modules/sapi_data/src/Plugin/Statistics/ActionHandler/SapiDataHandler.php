@@ -71,7 +71,8 @@ class SapiDataHandler extends ConfigurableActionHandlerBase implements Container
 
     // Only acts if $action is an EntityInteraction plugin type.
     if (!($action instanceof EntityInteraction) ||
-      empty(array_intersect($action->getAccount()->getRoles(), $this->configuration['roles']))) {
+      (!empty($this->configuration['roles']) &&
+      empty(array_intersect($action->getAccount()->getRoles(), $this->configuration['roles'])))) {
       return;
     }
 
@@ -128,7 +129,7 @@ class SapiDataHandler extends ConfigurableActionHandlerBase implements Container
     $form['roles'] = [
       '#type' => 'checkboxes',
       '#title' => 'Tracked roles',
-      '#description' => 'User roles to track.',
+      '#description' => 'Track requests only for the selected role(s). If you select no roles, statistics will be collected for all users.',
       '#options' => $all_roles,
       '#default_value' => $this->configuration['roles'],
     ];
