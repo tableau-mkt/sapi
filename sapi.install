@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains sapi.install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function sapi_uninstall() {
+  $configs = [
+    'sapi.plugin.action_file_logger',
+  ];
+  foreach ($configs as $config) {
+    Drupal::configFactory()->getEditable($config)->delete();
+  }
+}
