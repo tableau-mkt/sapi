@@ -67,7 +67,7 @@ class ActionFileLogger extends ConfigurableActionHandlerBase implements Containe
     try {
       // Write the action type data to a file with timestamp and new line.
       $log_file = isset($this->configuration['file_path']) ? $this->configuration['file_path'] : self::DEFAULT_FILE_PATH;
-      $data = time() . ' ' . $action->describe() . "\n";
+      $data = time() . ' ' . $action->describe() . PHP_EOL;
 
       $handle = fopen($log_file, 'a');
       fwrite($handle, $data);
