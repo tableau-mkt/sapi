@@ -7,7 +7,7 @@ dependencies:
     - sapi_data
     - user
 id: sapi_data_overview
-label: 'Sapi data overview'
+label: 'SAPI Data overview'
 module: views
 description: ''
 tag: ''
