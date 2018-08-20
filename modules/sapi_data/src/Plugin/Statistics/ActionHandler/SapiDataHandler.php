@@ -18,7 +18,7 @@ use Drupal\user\Entity\Role;
  * @ActionHandler(
  *  id = "sapi_data_handler",
  *  label = "SAPI Data Handler",
- *  description = "Track entity interactions"
+ *  description = "Log entity interactions to SAPI Data entity"
  * )
  */
 class SapiDataHandler extends ConfigurableActionHandlerBase implements ContainerFactoryPluginInterface {
