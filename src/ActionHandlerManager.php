@@ -29,4 +29,16 @@ class ActionHandlerManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'sapi_sapi_action_handler_plugins');
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefinitions() {
+    $definitions = parent::getDefinitions();
+
+    // Sort the defintions.
+    ksort($definitions);
+
+    return $definitions;
+  }
+
 }

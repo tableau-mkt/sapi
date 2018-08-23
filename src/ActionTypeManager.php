@@ -36,6 +36,18 @@ class ActionTypeManager extends DefaultPluginManager implements ContextAwarePlug
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function getDefinitions() {
+    $definitions = parent::getDefinitions();
+
+    // Sort the defintions.
+    ksort($definitions);
+
+    return $definitions;
+  }
+
+  /**
    * Creates a pre-configured instance of a plugin.
    *
    * @param string $plugin_id
