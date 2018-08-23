@@ -33,7 +33,6 @@ use Drupal\sapi\ActionTypeBase;
  *    ]
  *  ];
  *
- * @TODO should we pass \Drupal\user\UserInterface instead of AccountProxy? it would give us a better context
  */
 class EntityInteraction extends ActionTypeBase {
 

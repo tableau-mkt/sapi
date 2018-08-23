@@ -18,9 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *  description = "Log any received actions to a file"
  * )
  *
- * Testing action handler, which only logs the ->describe() string of every
- * received plugin, so that you can check the Drupal logs to see if actions
- * are being sent properly.
+ * Action handler, which logs the ->describe() string of every
+ * received plugin to a file.
  */
 class ActionFileLogger extends ConfigurableActionHandlerBase implements ContainerFactoryPluginInterface {
 
