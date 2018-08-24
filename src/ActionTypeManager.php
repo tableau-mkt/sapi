@@ -96,7 +96,7 @@ class ActionTypeManager extends DefaultPluginManager implements ContextAwarePlug
       }
 
       drupal_set_message('FAILED TO CREATE ACTION');
-      throw new MissingPluginConfiguration('ActionType context constraint violation (check your plugin contexts): ' . implode(".\n ", $messages));
+      throw new MissingPluginConfiguration('ActionType context constraint violation (check your plugin contexts): ' . implode(PHP_EOL, $messages));
     }
 
     return $instance;
