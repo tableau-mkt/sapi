@@ -43,34 +43,4 @@ class EntityInteraction extends ActionTypeBase {
     return 'Entity event: [entity:' . (($this->getEntity() instanceof EntityInterface) ? $this->getEntity()->label() . '(' . $this->getEntity()->id() . ')' : 'none') . '][account:' . (($this->getAccount() instanceof AccountProxyInterface) ? $this->getAccount()->getDisplayName() . '(' . $this->getAccount()->id() . ')' : 'none') . '][action:' . $this->getAction() . ']';
   }
 
-  /**
-   * Get the action performed on the entity.
-   *
-   * @return string
-   *   Action type of action.
-   */
-  public function getAction() {
-    return $this->getContextValue('action');
-  }
-
-  /**
-   * Get the entity acted on.
-   *
-   * @return \Drupal\Core\Entity\EntityInterface
-   *   Entity of action.
-   */
-  public function getEntity() {
-    return $this->getContextValue('entity');
-  }
-
-  /**
-   * Get the account who performed the action.
-   *
-   * @return \Drupal\Core\Session\AccountProxyInterface|null
-   *   Account that acted in action.
-   */
-  public function getAccount() {
-    return $this->getContextValue('account');
-  }
-
 }

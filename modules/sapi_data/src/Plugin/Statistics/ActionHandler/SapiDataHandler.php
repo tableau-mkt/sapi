@@ -76,17 +76,20 @@ class SapiDataHandler extends ConfigurableActionHandlerBase implements Container
       return;
     }
 
+    /** @var array \Drupal\Component\Plugin\Context\ContextInterface[] */
+    $contexts = $action->getContextValues();
+
     /** @var string $entity_type */
-    $entity_type = $action->getEntity()->getEntityTypeId();
+    $entity_type = $contexts['entity']->getEntityTypeId();
 
     /** @var string $entity_id */
-    $entity_id = $action->getEntity()->id();
+    $entity_id = $contexts['entity']->id();
 
     /** @var string $interaction_type */
-    $interaction_type = $action->getAction();
+    $interaction_type = $contexts['action'];
 
     /** @var string $user_id */
-    $user_id = $action->getAccount()->id();
+    $user_id = $contexts['account']->id();
 
     /** @var \Drupal\Core\Entity\EntityStorageInterface $sapiDataStorage */
     $sapiDataStorage = $this->entityTypeManager->getStorage('sapi_data');
@@ -99,6 +102,7 @@ class SapiDataHandler extends ConfigurableActionHandlerBase implements Container
       'field_interaction_type' => $interaction_type,
       'field_entity_reference' => ['target_id' => $entity_id, 'target_type' => $entity_type],
       'field_entity_user' => $user_id,
+      'field_peak_memory' => memory_get_peak_usage(),
     ]);
 
     if (!$sapiData->save()) {
