@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ActionHandler (
  *  id = "action_file_logger",
  *  label = "Action File Logger",
- *  description = "Log any received actions to a file"
+ *  description = "Log actions to a file"
  * )
  *
  * Action handler, which logs the ->describe() string of every

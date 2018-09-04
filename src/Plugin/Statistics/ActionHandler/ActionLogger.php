@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ActionHandler (
  *  id = "action_logger",
  *  label = "Action Logger",
- *  description = "Log any received actions"
+ *  description = "Log actions to Drupal log"
  * )
  *
  * Testing action handler, which only logs the ->describe() string of every
