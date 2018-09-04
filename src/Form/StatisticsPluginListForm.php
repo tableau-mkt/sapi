@@ -95,7 +95,6 @@ class StatisticsPluginListForm extends ConfigFormBase {
         'description' => $this->t('Description'),
       ],
       '#empty' => $this->t('There are no plugins yet.'),
-      '#tableselect' => TRUE,
       '#default_value' => $this->config('sapi.action_types')->get('enabled'),
       '#caption' => $this->t('Action Types'),
     ];
