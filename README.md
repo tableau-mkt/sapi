@@ -1,74 +1,79 @@
 # SAPI
 
-The statistics API Drupal 8 module is intended simplify and centralize event 
+The Statistics API Drupal 8 module is intended simplify and centralize event
 recording (tracking) and statistical evaluations of events, and to make it easy
-to feed that data back into Drupal 
+to log the data.
 
 The module can be found at http://drupal.org/project/sapi
 
 This repository main branch corresponds to the 3.x module effort, as seen in
-drupal.org 
-
-Consider also checking out our demo SAPI extension module: 
-https://github.com/james-nesbitt/sapi-demo
+drupal.org
 
 ## Current status
 
 The core 3.x functionality works well, and is considered reliable, but it quite
-abstract, and does little on it's own.
+abstract, and does little on its own.
 
-The submodule: sapi_entity_interaction effectively tracks all user interactions
- with entities, which can be used to
- build views based on those interactions (some demo views exaist already in the
-  module)
+## Submodules
+The provided submodule sapi_data provides a storage facility to log events to a Drupal
+entity.
 
-###Incoming modules:
+Other separate contributed modules such as Better Statistics or New Relic Insights
+use SAPI to capture and log events.
 
-#### sapi_user_journey
+## Installation
 
-Track a user's journey from page to page of your site, to see what navigation
- is commin, and what elements are not used.
+To install the SAPI module into your site, use the typical methods:
 
-## to use
-
-To install the sapi module into your site, use the typical process:
-
-- download the package to modules/contrib/
-- use composer require
+- Download the package to modules/contrib/
+- Use "composer require drupal/sapi"
 
 ### Site admins
 
-- The core moduile provides some administrative pages to enable and disable
- handler plugins /admin/config/sapi
-- The data storage custom entitiy can be confiugred and managed at
- admin/strucutre/sapi
+- The core module provides administrative pages to enable and disable handler
+plugins /admin/config/sapi
+- The sapi_data storage custom entity can be configured and managed at
+admin/structure/sapi
 
-### developers
+### Developers
 
-The most common ay to extend sapi is to write handcler plugins, and triggers
+The most common way to extend SAPI is to write action handler plugins for custom
+storage of events.
 
-#### white a new trigger when you want to send data to be tracked:
+#### Creating new event triggers to send data to be tracked:
 
-1. write come custom code wherever you want to start a trigger
-2. incllude the dispatcher service in scope
-3. include the ActionTypePluginManager in scope
-3. create an  action (ActionType plugin) instance using the plugin manager
-4. dispatch the action using the dispatcher
+1. Use a Drupal hook or EventSubscriber to trigger the event and provide
+context.  See the 8.x version of the Better Statistics module for examples of
+both.  For front-end events, you can use JavaScript to post data to a Drupal
+service callback.
+2. Create an ActionType plugin instance, e.g. EntityInteraction.php, using the
+ActionTypePluginManager manager.  (For more complex scenarios, custom ActionType
+plugins can be created.)
+3. Include the SAPI Dispatcher service in scope and pass the action data to the
+Dispatcher, which in turn passes the action to all the enabled SAPI handlers.
 
-* choose with actiontype plugin you want to use, based on whhat data you need
- to send.  Perhaps you will need to
- creata a new plugin.
+#### Creating new SAPI handlers
 
-#### handle a SAPI event with a new response
+1. Create a new action handler plugin to manipulate the data and send it to a
+storage facility.  See ActionFileLogger.php, ActionLogger.php, and
+SapiDataHandler.php as examples.
+2. Enable the handler at /admin/config/sapi/statistics-plugins.
 
-1. create a new handler plugin
+#### Adding additional fields
 
-#### store/retriecve SAPI data
+1. Additional data can be provided by adding contexts to the triggering hook,
+EventSubscriber, or service callback.
+2. The contexts are used in the handlers to derive useful data and map the data
+to a storage facility, e.g. the SAPI data entity.
 
-SAPI data is typically stored using the custom content entity provided in
- the submodule "sapi_data".
-You can interact with this data using any entity applications such as views.
+#### Store & Retrieve SAPI data
 
-## TO join us
+SAPI data is stored using the custom content entity provided in the submodule
+"sapi_data". You can interact with this data using any entity tool such as Views.
 
-Come and visit out Trello board: https://trello.com/b/fiBWGqdo/sapi2
+## Credits
+Most of the architectural development of the 8.x version was done by
+https://www.drupal.org/u/james-nesbitt and colleagues.
+
+https://www.drupal.org/u/papagrande extended the architecture and prepared the
+module for initial release.
