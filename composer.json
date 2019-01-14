@@ -6,6 +6,12 @@
   "license": "GPL-2.0+",
   "homepage": "https://www.drupal.org/project/sapi",
   "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
   "support": {
     "issues": "https://www.drupal.org/project/issues/sapi",
     "source": "http://cgit.drupalcode.org/sapi"
