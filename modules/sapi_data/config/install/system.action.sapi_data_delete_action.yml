@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - sapi_data
+id: sapi_data_delete_action
+label: 'Delete sapi data'
+type: sapi_data
+plugin: sapi_data_delete_action
+configuration: {  }

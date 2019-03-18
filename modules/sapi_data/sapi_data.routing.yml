@@ -1,0 +1,6 @@
+sapi_data.multiple_delete_confirm:
+  path: '/admin/structure/sapi/sapi_data/delete'
+  defaults:
+    _form: '\Drupal\sapi_data\Form\DeleteMultiple'
+  requirements:
+    _permission: 'delete sapi data entry entities'
